@@ -2,17 +2,21 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, CryptoUser
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/user', methods=['POST', 'GET'])
+def get_users():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend"
-    }
+    # response_body = {
+    #     "msg": "Hello, this is your GET /user response "
+    # }
 
-    return jsonify(response_body), 200
+    users_alls = CryptoUser.query.all()
+
+    result = list(map(lambda x: x.serialize(), users_alls))
+
+    return jsonify(result), 200
