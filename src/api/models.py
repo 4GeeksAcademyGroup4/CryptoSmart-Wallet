@@ -39,6 +39,7 @@ class CryptoUser(db.Model):
             "lastName": self.lastName,
             "email": self.email,
             "is_Active": self.is_Active,
+            "usercode": self.name[0] + self.lastName + str(self.id),
             # do not serialize the password, its a security breach
         }
 
