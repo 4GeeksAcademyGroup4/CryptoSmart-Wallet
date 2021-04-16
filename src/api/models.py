@@ -39,6 +39,7 @@ class CryptoUser(db.Model):
             "lastName": self.lastName,
             "email": self.email,
             "is_Active": self.is_Active,
+            "usercode": self.name[0] + self.lastName + str(self.id),
             # do not serialize the password, its a security breach
         }
 
@@ -47,6 +48,7 @@ class CryptoCoins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     symbol = db.Column(db.String(120), unique=True, nullable=False)
+    price = db.Column(db.Numeric,unique=True, nullable=False)
     accounts = db.relationship('Account',backref='coins', lazy=True)
     transactions = db.relationship('Transaction',backref='coins', lazy=True)
 
@@ -58,6 +60,7 @@ class CryptoCoins(db.Model):
             "id": self.id,
             "name": self.name,
             "symbol": self.symbol,
+            "price": self.price,
             # do not serialize the password, its a security breach
         }
 
@@ -71,6 +74,9 @@ class Account(db.Model):
 
     def __repr__(self):
         return '<Account %r>' % self.userID
+
+    def Deposit(self, amount):
+        self.balance = self.balance + amount
 
     def serializebyUser(self):
         return {
