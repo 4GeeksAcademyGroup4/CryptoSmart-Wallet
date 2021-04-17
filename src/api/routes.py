@@ -20,7 +20,7 @@ def handle_hello():
 @api.route('/user', methods=["GET"])
 def get_user ():
     users = CryptoUser.query.all()
-    request_body = list(map(lambda users:users.serialize(),users))
+    request_body = list(map(lambda x:x.serialize(),users))
     return jsonify(request_body),200
 
 @api.route('/user', methods=["POST"])
