@@ -2,10 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
 from basicauth import decode
-from api.models import db, CryptoUser
+from api.models import db, CryptoUser, Account
 from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
@@ -18,8 +18,14 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/login', methods=["GET"])
-def get_login():
+@api.route('/User', methods=["GET"])
+def get_user ():
+    users = CryptoUser.query.all()
+    request_body = list(map(lambda x:x.serialize(),users))
+    return jsonify(request_body),200
+
+@api.route('/Login', methods=["GET"])
+def Login():
     headers = request.headers
     AuthHeader = headers['Authorization']
     username, password = decode(AuthHeader)
@@ -33,10 +39,13 @@ def get_login():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id }),200
 
-@api.route('/user', methods=["GET"])
-def get_user ():
-    users = CryptoUser.query.all()
-    request_body = list(map(lambda x:x.serialize(),users))
+@api.route('/Register', methods=["POST"])
+def Register ():
+    data = request.get_json()
+    user = CryptoUser(data["name"],data["lastName"],data["email"],data["password"])
+    db.session.add(user)
+    db.session.commit()
+    return jsonify("Message : Se adiciono el usuario!"),200
     return jsonify(request_body),200
 
 @api.route('/ValidateEmail/<string:id>', methods=["GET"])
@@ -55,15 +64,6 @@ def ValidateEmail(id):
     else:
         return jsonify({"msg": "Invalid Email"}),411
 
-@api.route('/register', methods=["POST"])
-def register ():
-    data = request.get_json()
-    user = CryptoUser(data["name"],data["lastName"],data["email"],data["password"])
-    db.session.add(user)
-    db.session.commit()
-    return jsonify("Message : Se adiciono el usuario!"),200
-    return jsonify(request_body),200
-
 @api.route('/ForgotPassword/<string:id>', methods=["GET"])
 def ForgotPassword (id):
     # for validating an Email
@@ -81,3 +81,18 @@ def ForgotPassword (id):
     
     else:
         return jsonify({"msg": "Invalid Email"}),411
+
+@api.route('/MainBalance/<int:id>', methods=["POST"])
+@jwt_required()
+def MainBalance(id):
+    # Access the identity of the current user with get_jwt_identity
+    current_user_id = get_jwt_identity()
+    accounts = []
+    if id == 0:
+        accounts = Account.query.filter_by(userID = current_user_id)        
+    else:
+        accounts = Account.query.filter_by(userID = current_user_id, coinID= id)
+    
+    result = list(map(lambda x: x.serializebyUser(), accounts))
+    
+    return jsonify(result),200
