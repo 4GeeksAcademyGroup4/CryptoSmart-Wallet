@@ -30,4 +30,4 @@ def post_user ():
     db.session.add(user)
     db.session.commit()
     return jsonify("Message : Se adiciono el usuario!"),200
-    return jsonify(request_body),200
+    
