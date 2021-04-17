@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e973fcb4f2f4
+Revision ID: d1b8c1fd8bc7
 Revises: 
-Create Date: 2021-04-15 23:54:38.914950
+Create Date: 2021-04-17 15:07:20.086515
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e973fcb4f2f4'
+revision = 'd1b8c1fd8bc7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,20 +22,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=False),
     sa.Column('symbol', sa.String(length=120), nullable=False),
+    sa.Column('price', sa.Numeric(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('price'),
     sa.UniqueConstraint('symbol')
-    )
-    op.create_table('user',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('email', sa.String(length=120), nullable=False),
-    sa.Column('password', sa.String(length=80), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('firstname', sa.String(length=120), nullable=False),
     sa.Column('lastName', sa.String(length=120), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=80), nullable=False),
@@ -72,6 +66,5 @@ def downgrade():
     op.drop_table('transactions')
     op.drop_table('accounts')
     op.drop_table('users')
-    op.drop_table('user')
     op.drop_table('coins')
     # ### end Alembic commands ###

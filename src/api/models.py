@@ -1,11 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
-
 db = SQLAlchemy()
 
 class CryptoUser(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=False, nullable=False)
+    firstname = db.Column(db.String(120), unique=False, nullable=False)
     lastName = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -13,17 +12,24 @@ class CryptoUser(db.Model):
     accounts = db.relationship('Account',backref='user', lazy=True)
     transactions = db.relationship('Transaction',backref='user', lazy=True)
 
+    def __init__(self, firstname, lastName, email, password):
+        self.firstname = firstname,
+        self.lastName = lastName,
+        self.email = email,
+        self.password = password,
+        self.is_Active = True
+
     def __repr__(self):
         return '<CryptoUser %r>' % self.name
 
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
+            "firstname": self.firstname,
             "lastName": self.lastName,
             "email": self.email,
             "is_Active": self.is_Active,
-            "usercode": self.name[0] + self.lastName + str(self.id),
+            "usercode": self.firstname[0] + self.lastName + str(self.id),
             # do not serialize the password, its a security breach
         }
 
