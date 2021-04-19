@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 import re
 import requests
 from basicauth import decode
-from api.models import db, CryptoUser, Account
+from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
 from api.utils import generate_sitemap, APIException
 api = Blueprint('api', __name__)
 
@@ -38,11 +38,19 @@ def FillCryptoData ():
     'Cookie': '__cfduid=da8b513c9ecb27846d9c63fec5a2b69001617764257'
     }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.get(url, headers=headers, data=payload)
 
-    # print(response.text)
+    r_dictionary = response.json()
 
-    return jsonify(response.text),200
+    for coin in r_dictionary["data"]:
+        Crypto = CryptoCoins.query.filter_by(symbol=coin["symbol"]).first()
+        
+        if Crypto is None:
+            newcoin = CryptoCoins(coin["name"],coin["symbol"],coin["cmc_rank"])
+            db.session.add(newcoin)
+            db.session.commit()
+
+    return jsonify({"msg": "Cryptocoins added successfully"}),200
 
 @api.route('/Login', methods=["GET"])
 def Login():
@@ -116,3 +124,30 @@ def MainBalance(id):
     result = [account.serializebyUser() for account in accounts]
     
     return jsonify(result),200
+
+@api.route('/Transaction', methods=["POST"])
+@jwt_required()
+def Transaction():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    account = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
+
+    # print(account.id)
+    if account is None:
+        newaccount = Account(current_user_id,data["coinID"],data["amount"])
+        db.session.add(newaccount)
+        db.session.commit()
+        
+        account = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
+        # print("No existe",account.id)
+        newtrans = CryptoTransaction(data["date"],current_user_id,account.id,data["amount"])
+        db.session.add(newtrans)
+        db.session.commit()
+    else:
+        # print("Existee", account.id)
+        newtrans = CryptoTransaction(data["date"],current_user_id,account.id,data["amount"])
+        db.session.add(newtrans)
+        db.session.commit()
+    
+    return jsonify({"msg": "Transaccion Procesada"}),200
+        
