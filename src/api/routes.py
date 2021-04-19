@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
+import requests
 from basicauth import decode
 from api.models import db, CryptoUser, Account
 from api.utils import generate_sitemap, APIException
@@ -21,8 +22,27 @@ def handle_hello():
 @api.route('/User', methods=["GET"])
 def get_user ():
     users = CryptoUser.query.all()
-    request_body = list(map(lambda x:x.serialize(),users))
-    return jsonify(request_body),200
+    # request_body = list(map(lambda x:x.serialize(),users))
+    result = [user.serialize() for user in CryptoUser.query.all()]
+    # return jsonify(request_body),200
+    return jsonify(result),200
+
+@api.route('/FillCryptoData', methods=["GET"])
+def FillCryptoData ():
+    
+    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+
+    payload={}
+    headers = {
+    'X-CMC_PRO_API_KEY': 'd23ea42b-4f22-47b3-8e28-4650f23c4096',
+    'Cookie': '__cfduid=da8b513c9ecb27846d9c63fec5a2b69001617764257'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    # print(response.text)
+
+    return jsonify(response.text),200
 
 @api.route('/Login', methods=["GET"])
 def Login():
@@ -42,7 +62,7 @@ def Login():
 @api.route('/Register', methods=["POST"])
 def Register ():
     data = request.get_json()
-    user = CryptoUser(data["name"],data["lastName"],data["email"],data["password"])
+    user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
     db.session.add(user)
     db.session.commit()
     return jsonify("Message : Se adiciono el usuario!"),200
