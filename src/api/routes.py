@@ -93,6 +93,6 @@ def MainBalance(id):
     else:
         accounts = Account.query.filter_by(userID = current_user_id, coinID= id)
     
-    result = list(map(lambda x: x.serializebyUser(), accounts))
+    result = [account.serializebyUser() for account in accounts]
     
     return jsonify(result),200

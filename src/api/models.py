@@ -9,8 +9,8 @@ class CryptoUser(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_Active = db.Column(db.Boolean(), unique=False, nullable=False)
-    accounts = db.relationship('Account',backref='user', lazy=True)
-    transactions = db.relationship('Transaction',backref='user', lazy=True)
+    accounts = db.relationship('Account',backref='user')
+    transactions = db.relationship('Transaction',backref='user')
 
     def __init__(self, firstname, lastName, email, password):
         self.firstname = firstname,
@@ -23,14 +23,18 @@ class CryptoUser(db.Model):
         return '<CryptoUser %r>' % self.firstname
 
     def serialize(self):
+        if len(self.accounts) == 0:
+            dict_accounts = []
+        elif self.accounts:
+            dict_accounts = [account.serializebyUser() for account in self.accounts]
         return {
-            "id": self.id,
+            "userID": self.id,
             "firstname": self.firstname,
             "lastName": self.lastName,
             "email": self.email,
             "is_Active": self.is_Active,
             "usercode": self.firstname[0] + self.lastName + str(self.id),
-            # "accounts": self.accounts
+            "accounts": dict_accounts
             # do not serialize the password, its a security breach
         }
 
@@ -39,19 +43,17 @@ class CryptoCoins(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     symbol = db.Column(db.String(120), unique=True, nullable=False)
-    price = db.Column(db.Float,unique=True, nullable=False)
-    accounts = db.relationship('Account',backref='coins', lazy=True)
-    transactions = db.relationship('Transaction',backref='coins', lazy=True)
+    accounts = db.relationship('Account',backref='coin')
+    transactions = db.relationship('Transaction',backref='coin')
 
     def __repr__(self):
         return '<CryptoCoins %r>' % self.name
 
     def serialize(self):
         return {
-            "id": self.id,
+            "coinID": self.id,
             "name": self.name,
-            "symbol": self.symbol,
-            "price": self.price,
+            "symbol": self.symbol
             # do not serialize the password, its a security breach
         }
 
@@ -70,14 +72,17 @@ class Account(db.Model):
         self.balance = self.balance + amount
 
     def serializebyUser(self):
+        if self.coin:
+            dict_coin = self.coin.serialize()
         return {
-            "id": self.id,
+            "accountID": self.id,
             "coinID": self.coinID,
             "balance": self.balance,
+            "coin": dict_coin
             # do not serialize the password, its a security breach
         }
 
-    def serializebyCoin(self):
+    def serializebyCoin(self):        
         return {
             "id": self.id,
             "userID": self.userID,
