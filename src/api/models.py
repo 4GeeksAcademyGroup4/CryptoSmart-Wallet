@@ -9,6 +9,7 @@ class CryptoUser(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_Active = db.Column(db.Boolean(), unique=False, nullable=False)
+    userCode = db.Column(db.String(80), unique=True, nullable=True)
     accounts = db.relationship('Account',backref='user')
     transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.fromID',backref='from_user')
     transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.toID',backref='to_user')
@@ -23,9 +24,12 @@ class CryptoUser(db.Model):
     def __repr__(self):
         return '<CryptoUser %r>' % self.firstname
 
+    def CreateUserCode(self):
+        self.userCode = self.firstname[0] + self.lastName + str(self.id)
+
     def serializeName(self):
         return {
-            "usercode":self.firstname[0] + self.lastName + str(self.id),
+            "usercode":self.userCode,
             "firstname": self.firstname,
             "lastName": self.lastName,
         }
@@ -41,7 +45,7 @@ class CryptoUser(db.Model):
             "lastName": self.lastName,
             "email": self.email,
             "is_Active": self.is_Active,
-            "usercode": self.firstname[0] + self.lastName + str(self.id),
+            "usercode": self.userCode,
             "accounts": dict_accounts
             # do not serialize the password, its a security breach
         }
@@ -116,7 +120,7 @@ class CryptoTransaction(db.Model):
     date = db.Column(db.DateTime,unique=False, nullable=False)
     fromID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     toID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
-    accountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = false)
+    accountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     amount = db.Column(db.Float,unique=True, nullable=False)
 
     def __repr__(self):

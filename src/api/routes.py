@@ -73,6 +73,12 @@ def Register ():
     user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
     db.session.add(user)
     db.session.commit()
+
+    Newuser = CryptoUser.query.filter_by(email=data["email"], is_Active=True).first()
+    Newuser.CreateUserCode()
+    db.session.flush()
+    db.session.commit()
+
     return jsonify("Message : Se adiciono el usuario!"),200
     return jsonify(request_body),200
 
@@ -125,29 +131,68 @@ def MainBalance(id):
     
     return jsonify(result),200
 
-@api.route('/Transaction', methods=["POST"])
+@api.route('/CreateAccount', methods=["POST"])
 @jwt_required()
-def Transaction():
+def CreateAccount():
     data = request.get_json()
     current_user_id = get_jwt_identity()
-    account = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
 
-    # print(account.id)
-    if account is None:
+    existAccount = Account.query.filter_by(userID=current_user_id, coinID=data["coinID"]).first()
+
+    if existAccount is None:
         newaccount = Account(current_user_id,data["coinID"],data["amount"])
         db.session.add(newaccount)
         db.session.commit()
-        
-        account = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
-        # print("No existe",account.id)
-        newtrans = CryptoTransaction(data["date"],current_user_id,account.id,data["amount"])
-        db.session.add(newtrans)
-        db.session.commit()
+
+        return jsonify(newaccount.serializebyUser()),200 
+
     else:
-        # print("Existee", account.id)
-        newtrans = CryptoTransaction(data["date"],current_user_id,account.id,data["amount"])
-        db.session.add(newtrans)
-        db.session.commit()
+        return jsonify({"msg": "Ya hay una cuenta creada con dicha moneda"}),406 
+
+
+@api.route('/Transfer', methods=["POST"])
+@jwt_required()
+def Transfer():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    FromAccount = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
     
-    return jsonify({"msg": "Transaccion Procesada"}),200
+    if FromAccount is None:
+        return jsonify({"msg": "El usuario no posee una cuenta de dicha moneda"}),400  
+    elif FromAccount.balance < data["amount"]:
+        return jsonify({"msg": "El usuario no posee una saldo suficiente"}),400  
+    else:
+        UserFinal = CryptoUser.query.filter_by(userCode=data["UserCode"], is_Active=True).first()
+
+        if UserFinal is None:
+            return jsonify({"msg": "El destinatario no existe"}),400  
+
+        else:
+            ToAccount = Account.query.filter_by(userID = UserFinal.id, coinID= data["coinID"]).first()
         
+            if ToAccount is None:
+                newaccount = Account(UserFinal.id,data["coinID"],data["amount"])
+                db.session.add(newaccount)
+                db.session.commit()
+
+                ToAccount = Account.query.filter_by(userID = UserFinal.id, coinID= data["coinID"]).first()
+    
+            # Retiro
+            FromAccount.Deposit((0-data["amount"]))
+            db.session.flush()
+            db.session.commit()    
+
+            newtrans = CryptoTransaction(data["date"],current_user_id,UserFinal.id,FromAccount.id,(0 - data["amount"]))
+            db.session.add(newtrans)
+            db.session.commit()    
+
+            # Deposito
+            ToAccount.Deposit(data["amount"])
+            db.session.flush()
+            db.session.commit()  
+
+            newtrans = CryptoTransaction(data["date"],current_user_id,UserFinal.id,ToAccount.id,data["amount"])
+            db.session.add(newtrans)
+            db.session.commit() 
+
+            return jsonify({"msg": "La transferencia se realizó satisfactoriamente"}),200  
