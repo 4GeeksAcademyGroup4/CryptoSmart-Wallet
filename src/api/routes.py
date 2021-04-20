@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
 import requests
+from datetime import datetime
 from basicauth import decode
 from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
 from api.utils import generate_sitemap, APIException
@@ -27,7 +28,7 @@ def get_user ():
     # return jsonify(request_body),200
     return jsonify(result),200
 
-@api.route('/FillCryptoData', methods=["GET"])
+@api.route('/FillCryptoData', methods=["POST"])
 def FillCryptoData ():
     
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
@@ -144,11 +145,43 @@ def CreateAccount():
         db.session.add(newaccount)
         db.session.commit()
 
+        FromAccount = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
+
+        newtrans = CryptoTransaction(data["date"],current_user_id,current_user_id,FromAccount.id,data["amount"])
+        db.session.add(newtrans)
+        db.session.commit() 
+        
         return jsonify(newaccount.serializebyUser()),200 
 
     else:
         return jsonify({"msg": "Ya hay una cuenta creada con dicha moneda"}),406 
 
+
+@api.route('/Deposit', methods=["POST"])
+@jwt_required()
+def Deposit():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    FromAccount = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
+    
+    # Varification if Exist Account
+    if FromAccount is None:
+        newaccount = Account(current_user_id,data["coinID"],data["amount"])
+        db.session.add(newaccount)
+        db.session.commit()
+        
+        FromAccount = Account.query.filter_by(userID = current_user_id, coinID= data["coinID"]).first()
+
+    # Deposit
+    FromAccount.Deposit(data["amount"])
+    db.session.flush()
+    db.session.commit()  
+
+    newtrans = CryptoTransaction(data["date"],current_user_id,current_user_id,FromAccount.id,data["amount"])
+    db.session.add(newtrans)
+    db.session.commit() 
+
+    return jsonify({"msg": "El Deposito se realizó satisfactoriamente"}),200
 
 @api.route('/Transfer', methods=["POST"])
 @jwt_required()
@@ -196,3 +229,12 @@ def Transfer():
             db.session.commit() 
 
             return jsonify({"msg": "La transferencia se realizó satisfactoriamente"}),200  
+
+@api.route('/History/<int:id>', methods=["POST"])
+@jwt_required()
+def History(id):
+    data = request.get_json()
+    Transactions = CryptoTransaction.query.filter(CryptoTransaction.accountID == id)
+    result = [item.serialize() for item in Transactions]
+
+    return jsonify(result), 200

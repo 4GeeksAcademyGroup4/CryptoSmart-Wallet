@@ -11,8 +11,8 @@ class CryptoUser(db.Model):
     is_Active = db.Column(db.Boolean(), unique=False, nullable=False)
     userCode = db.Column(db.String(80), unique=True, nullable=True)
     accounts = db.relationship('Account',backref='user')
-    transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.fromID',backref='from_user')
-    transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.toID',backref='to_user')
+    transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.fromID',backref='user')
+    transactions = db.relationship('CryptoTransaction', foreign_keys='CryptoTransaction.toID',backref='user')
 
     def __init__(self, firstname, lastName, email, password):
         self.firstname = firstname,
@@ -121,7 +121,7 @@ class CryptoTransaction(db.Model):
     fromID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     toID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     accountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
-    amount = db.Column(db.Float,unique=True, nullable=False)
+    amount = db.Column(db.Float,unique=False, nullable=False)
 
     def __repr__(self):
         return '<CryptoTransaction %r>' % self.accountID
@@ -134,11 +134,11 @@ class CryptoTransaction(db.Model):
         self.amount = amount
     
     def serialize(self):
-        dic_from_user = self.from_user.serializeName()
-        dic_to_user = self.to_user.serializeName()
+        dic_from_user = self.user.serializeName()
+        dic_to_user = self.user.serializeName()
         return {
             "date": self.date,
             "amount": self.amount,
-            "from":dic_user,
+            "from":dic_from_user,
             "to":dic_to_user
         } 
