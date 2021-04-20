@@ -5,6 +5,11 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
 import requests
+import smtplib
+import secrets
+import string
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from datetime import datetime
 from basicauth import decode
 from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
@@ -103,19 +108,44 @@ def ValidateEmail(id):
 def ForgotPassword (id):
     # for validating an Email
     regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    
     if(re.search(regex, id)):
         # Validate User
-        user = CryptoUser.query.filter_by(email=id, is_Active=True).first()
+        user = CryptoUser.query.filter_by(email=id,is_Active=True).first()
+    
         if user is None:
             return jsonify({"msg": "Email account not found"}),404
 
         # Return Error
-        # codigo generate Password     
-        user.password = "!234s678"
+        # codigo generate Password 
+        alphabet = string.ascii_letters + string.digits
+        password = ''.join(secrets.choice(alphabet) for i in range(8))     
+        user.password = password
         db.session.commit()
         #Codigo Enviar correo
+        
+        mail_content = 'Hola, se a generado una nueva contraseña para inicio de sesion: ' + password
+
+        #The mail addresses and password
+        sender_address = 'alejoguma94@gmail.com'
+        sender_pass = '$1234QWer$'
+        receiver_address = user.email
+        #Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = 'Clave de Recuperacion Generada'   #The subject line
+        #The body and the attachments for the mail
+        message.attach(MIMEText(mail_content, 'plain'))
+        #Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+        session.starttls() #enable security
+        session.login(sender_address, sender_pass) #login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
         return jsonify({"msg": "New Password Generated"}),200
-    
+        session.quit()
+        print('Mail Sent')
     else:
         return jsonify({"msg": "Invalid Email"}),411
 
