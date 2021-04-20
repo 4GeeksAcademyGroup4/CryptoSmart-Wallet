@@ -109,9 +109,11 @@ def ForgotPassword (id):
         if user is None:
             return jsonify({"msg": "Email account not found"}),404
 
-        # Return Error    
+        # Return Error
+        # codigo generate Password     
         user.password = "!234s678"
         db.session.commit()
+        #Codigo Enviar correo
         return jsonify({"msg": "New Password Generated"}),200
     
     else:
