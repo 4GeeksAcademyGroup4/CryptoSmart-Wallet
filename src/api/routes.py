@@ -9,6 +9,8 @@ from datetime import datetime
 from basicauth import decode
 from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
 from api.utils import generate_sitemap, APIException
+from functools import wraps
+
 api = Blueprint('api', __name__)
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -68,9 +70,22 @@ def Login():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id }),200
 
+
+
 @api.route('/Register', methods=["POST"])
 def Register ():
     data = request.get_json()
+    if data is None:
+            return "The request body is null", 400
+    if 'firstName' not in data:
+            return 'You need to specify the first_name',400
+    if 'lastName' not in data:
+            return 'You need to specify the last_name', 400
+    if 'email' not in data:
+            return 'You need to specify the email', 400
+    if 'password' not in data:
+            return 'You need to specify the password', 400
+    
     user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
     db.session.add(user)
     db.session.commit()
@@ -82,6 +97,8 @@ def Register ():
 
     return jsonify("Message : Se adiciono el usuario!"),200
     return jsonify(request_body),200
+
+
 
 @api.route('/ValidateEmail/<string:id>', methods=["GET"])
 def ValidateEmail(id):
