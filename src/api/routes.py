@@ -166,10 +166,11 @@ def ForgotPassword (id):
     else:
         return jsonify({"msg": "Invalid Email"}),411
 
-@api.route('/MainBalance/<int:id>', methods=["POST"])
+@api.route('/MainBalance/<int:id>', methods=["GET"])
 @jwt_required()
 def MainBalance(id):
     # Access the identity of the current user with get_jwt_identity
+    
     current_user_id = get_jwt_identity()
     accounts = []
     if id == 0:
@@ -185,6 +186,20 @@ def MainBalance(id):
 @jwt_required()
 def CreateAccount():
     data = request.get_json()
+    
+    if data is None:
+            return "The request body is null", 400
+
+    if 'coinID' not in data:
+            return 'You need to specify the coin_ID',400
+    if 'amount' not in data:
+            return 'You need to specify the amount',400
+    if 'date' not in data:
+            return 'You need to specify the date',400
+   
+            return "ok", 200
+
+
     current_user_id = get_jwt_identity()
 
     existAccount = Account.query.filter_by(userID=current_user_id, coinID=data["coinID"]).first()
