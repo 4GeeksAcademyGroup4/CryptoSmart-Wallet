@@ -15,6 +15,7 @@ from basicauth import decode
 from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
 from api.utils import generate_sitemap, APIException
 from functools import wraps
+from dateutil.relativedelta import relativedelta
 
 api = Blueprint('api', __name__)
 
@@ -72,7 +73,8 @@ def Login():
         return jsonify({"msg": "Bad email or password"}),401
 
     # Create Token
-    access_token = create_access_token(identity=user.id)
+    delta = relativedelta(minutes=30)
+    access_token = create_access_token(identity=user.id, expires_delta=delta)
     return jsonify({ "token": access_token, "user_id": user.id }),200
 
 
@@ -91,18 +93,23 @@ def Register ():
     if 'password' not in data:
             return 'You need to specify the password', 400
     
-    user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
-    db.session.add(user)
-    db.session.commit()
+    existUser = CryptoUser.query.filter_by(email=data["email"]).first()
 
-    Newuser = CryptoUser.query.filter_by(email=data["email"], is_Active=True).first()
-    Newuser.CreateUserCode()
-    db.session.flush()
-    db.session.commit()
+    if existUser is None:
+        user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
+        db.session.add(user)
+        db.session.commit()
 
-    return jsonify("Message : Se adiciono el usuario!"),200
-    return jsonify(request_body),200
+        Newuser = CryptoUser.query.filter_by(email=data["email"], is_Active=True).first()
+        Newuser.CreateUserCode()
+        db.session.flush()
+        db.session.commit()
 
+        return jsonify("Message : Se adiciono el usuario!"),200
+        return jsonify(request_body),200
+
+    else:
+        return jsonify("Este email ya se encuentra registrado"),406
 
 
 @api.route('/ValidateEmail/<string:id>', methods=["GET"])
