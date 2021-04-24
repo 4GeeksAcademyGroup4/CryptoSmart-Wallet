@@ -21,6 +21,7 @@ flask-jwt-extended = "*"
 basicauth = "*"
 requests = "*"
 python-dateutil = "*"
+flask-wtf = "*"
 
 [requires]
 python_version = "3.8"
