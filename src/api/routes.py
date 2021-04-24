@@ -65,10 +65,10 @@ def FillCryptoData ():
 def Login():
     headers = request.headers
     AuthHeader = headers['Authorization']
-    username, password = decode(AuthHeader)
+    email, password = decode(AuthHeader)
 
     # Validate User
-    user = CryptoUser.query.filter_by(email=username, password=password).first()
+    user = CryptoUser.query.filter_by(email=email, password=password).first()
     if user is None:
         return jsonify({"msg": "Bad email or password"}),401
 
@@ -96,11 +96,11 @@ def Register ():
     existUser = CryptoUser.query.filter_by(email=data["email"]).first()
 
     if existUser is None:
-        user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
+        user = CryptoUser(data["firstName"].lower(),data["lastName"].lower(),data["email"].lower(),data["password"])
         db.session.add(user)
         db.session.commit()
 
-        Newuser = CryptoUser.query.filter_by(email=data["email"], is_Active=True).first()
+        Newuser = CryptoUser.query.filter_by(email=data["email"].lower(), is_Active=True).first()
         Newuser.CreateUserCode()
         db.session.flush()
         db.session.commit()
