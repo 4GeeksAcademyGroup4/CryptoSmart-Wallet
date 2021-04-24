@@ -23,7 +23,7 @@ api = Blueprint('api', __name__)
 def handle_hello():
 
     response_body = {
-        "message": "Hello! I'm a message that came from the backend"
+        "message": "Hola! Soy un mensaje del backend"
     }
 
     return jsonify(response_body), 200
@@ -59,7 +59,7 @@ def FillCryptoData ():
             db.session.add(newcoin)
             db.session.commit()
 
-    return jsonify({"msg": "Cryptocoins added successfully"}),200
+    return jsonify({"msg": "Cryptomonedas agregadas exitosamente"}),200
 
 @api.route('/Login', methods=["GET"])
 def Login():
@@ -70,7 +70,7 @@ def Login():
     # Validate User
     user = CryptoUser.query.filter_by(email=email.lower(), password=password.lower()).first()
     if user is None:
-        return jsonify({"msg": "Bad email or password"}),401
+        return jsonify({"msg": "Correo o Contraseña incorrecta"}),401
 
     # Create Token
     delta = relativedelta(minutes=30)
@@ -83,15 +83,15 @@ def Login():
 def Register ():
     data = request.get_json()
     if data is None:
-            return "The request body is null", 400
+            return "La solicitud es Invalida", 400
     if 'firstName' not in data:
-            return 'You need to specify the first_name',400
+            return 'Debe especificar un nombre',400
     if 'lastName' not in data:
-            return 'You need to specify the last_name', 400
+            return 'Debe especificar un apellido', 400
     if 'email' not in data:
-            return 'You need to specify the email', 400
+            return 'Debe especificar un email', 400
     if 'password' not in data:
-            return 'You need to specify the password', 400
+            return 'Debe especificar una contrasena', 400
     
     existUser = CryptoUser.query.filter_by(email=data["email"]).first()
 
@@ -120,13 +120,13 @@ def ValidateEmail(id):
         # Validate User
         user = CryptoUser.query.filter_by(email=id.lower(), is_Active=True).first()
         if user is None:
-            return jsonify({"msg": "Email Valid"}),200
+            return jsonify({"msg": "Email Valido"}),200
 
         # Return Error    
-        return jsonify({"msg": "Email already exist"}),406
+        return jsonify({"msg": "Email ya existe"}),406
     
     else:
-        return jsonify({"msg": "Invalid Email"}),411
+        return jsonify({"msg": "Email invalido"}),411
 
 @api.route('/ForgotPassword/<string:id>', methods=["GET"])
 def ForgotPassword (id):
@@ -138,7 +138,7 @@ def ForgotPassword (id):
         user = CryptoUser.query.filter_by(email=id.lower(),is_Active=True).first()
     
         if user is None:
-            return jsonify({"msg": "Email account not found"}),404
+            return jsonify({"msg": "Cuenta de Email no encontrada"}),404
 
         # Return Error
         # codigo generate Password 
@@ -167,11 +167,11 @@ def ForgotPassword (id):
         session.login(sender_address, sender_pass) #login with mail_id and password
         text = message.as_string()
         session.sendmail(sender_address, receiver_address, text)
-        return jsonify({"msg": "New Password Generated"}),200
+        return jsonify({"msg": "Nuevo Password Generado"}),200
         session.quit()
-        print('Mail Sent')
+        print('Mail enviado')
     else:
-        return jsonify({"msg": "Invalid Email"}),411
+        return jsonify({"msg": "Invalido Email"}),411
 
 @api.route('/MainBalance/<int:id>', methods=["GET"])
 @jwt_required()
@@ -195,14 +195,14 @@ def CreateAccount():
     data = request.get_json()
     
     if data is None:
-            return "The request body is null", 400
+            return "La solicitud en nula", 400
 
     if 'coinID' not in data:
-            return 'You need to specify the coin_ID',400
+            return 'Necesita especificar coin_ID',400
     if 'amount' not in data:
-            return 'You need to specify the amount',400
+            return 'Necesita especificar la cantidad',400
     if 'date' not in data:
-            return 'You need to specify the date',400
+            return 'Necesita especificar la fecha',400
    
             return "ok", 200
 
