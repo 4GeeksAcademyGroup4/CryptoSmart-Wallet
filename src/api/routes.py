@@ -68,7 +68,7 @@ def Login():
     email, password = decode(AuthHeader)
 
     # Validate User
-    user = CryptoUser.query.filter_by(email=email.lower(), password=password.lower()).first()
+    user = CryptoUser.query.filter_by(email=email.lower(), password=password).first()
     if user is None:
         return jsonify({"msg": "Correo o Contraseña incorrecta"}),401
 
