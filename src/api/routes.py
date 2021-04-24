@@ -68,7 +68,7 @@ def Login():
     email, password = decode(AuthHeader)
 
     # Validate User
-    user = CryptoUser.query.filter_by(email=email, password=password).first()
+    user = CryptoUser.query.filter_by(email=email.lower(), password=password.lower()).first()
     if user is None:
         return jsonify({"msg": "Bad email or password"}),401
 
@@ -118,7 +118,7 @@ def ValidateEmail(id):
     regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
     if(re.search(regex, id)):
         # Validate User
-        user = CryptoUser.query.filter_by(email=id, is_Active=True).first()
+        user = CryptoUser.query.filter_by(email=id.lower(), is_Active=True).first()
         if user is None:
             return jsonify({"msg": "Email Valid"}),200
 
@@ -135,7 +135,7 @@ def ForgotPassword (id):
     
     if(re.search(regex, id)):
         # Validate User
-        user = CryptoUser.query.filter_by(email=id,is_Active=True).first()
+        user = CryptoUser.query.filter_by(email=id.lower(),is_Active=True).first()
     
         if user is None:
             return jsonify({"msg": "Email account not found"}),404
@@ -266,7 +266,7 @@ def Transfer():
     elif FromAccount.balance < data["amount"]:
         return jsonify({"msg": "El usuario no posee una saldo suficiente"}),400  
     else:
-        UserFinal = CryptoUser.query.filter_by(userCode=data["UserCode"], is_Active=True).first()
+        UserFinal = CryptoUser.query.filter_by(userCode=data["UserCode"].lower(), is_Active=True).first()
 
         if UserFinal is None:
             return jsonify({"msg": "El destinatario no existe"}),400  
