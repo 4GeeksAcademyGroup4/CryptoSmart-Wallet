@@ -65,10 +65,10 @@ def FillCryptoData ():
 def Login():
     headers = request.headers
     AuthHeader = headers['Authorization']
-    username, password = decode(AuthHeader)
+    email, password = decode(AuthHeader)
 
     # Validate User
-    user = CryptoUser.query.filter_by(email=username, password=password).first()
+    user = CryptoUser.query.filter_by(email=email.lower(), password=password.lower()).first()
     if user is None:
         return jsonify({"msg": "Bad email or password"}),401
 
@@ -96,11 +96,11 @@ def Register ():
     existUser = CryptoUser.query.filter_by(email=data["email"]).first()
 
     if existUser is None:
-        user = CryptoUser(data["firstName"],data["lastName"],data["email"],data["password"])
+        user = CryptoUser(data["firstName"].lower(),data["lastName"].lower(),data["email"].lower(),data["password"])
         db.session.add(user)
         db.session.commit()
 
-        Newuser = CryptoUser.query.filter_by(email=data["email"], is_Active=True).first()
+        Newuser = CryptoUser.query.filter_by(email=data["email"].lower(), is_Active=True).first()
         Newuser.CreateUserCode()
         db.session.flush()
         db.session.commit()
@@ -118,7 +118,7 @@ def ValidateEmail(id):
     regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
     if(re.search(regex, id)):
         # Validate User
-        user = CryptoUser.query.filter_by(email=id, is_Active=True).first()
+        user = CryptoUser.query.filter_by(email=id.lower(), is_Active=True).first()
         if user is None:
             return jsonify({"msg": "Email Valid"}),200
 
@@ -135,7 +135,7 @@ def ForgotPassword (id):
     
     if(re.search(regex, id)):
         # Validate User
-        user = CryptoUser.query.filter_by(email=id,is_Active=True).first()
+        user = CryptoUser.query.filter_by(email=id.lower(),is_Active=True).first()
     
         if user is None:
             return jsonify({"msg": "Email account not found"}),404
@@ -266,7 +266,7 @@ def Transfer():
     elif FromAccount.balance < data["amount"]:
         return jsonify({"msg": "El usuario no posee una saldo suficiente"}),400  
     else:
-        UserFinal = CryptoUser.query.filter_by(userCode=data["UserCode"], is_Active=True).first()
+        UserFinal = CryptoUser.query.filter_by(userCode=data["UserCode"].lower(), is_Active=True).first()
 
         if UserFinal is None:
             return jsonify({"msg": "El destinatario no existe"}),400  
