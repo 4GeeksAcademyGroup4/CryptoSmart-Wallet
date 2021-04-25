@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-export const Footer = () => (
+export const Plugin = () => (
 	<footer className="footer mt-auto py-3 text-center">
-		<a>Todos los derechos pertenecen a CryptoSmart Wallet & Desarrolladores</a>
+		<coin-ponent dark-mode border-radius="30" font="monospace" />
 	</footer>
 );

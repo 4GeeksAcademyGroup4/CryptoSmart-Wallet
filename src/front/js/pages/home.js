@@ -1,24 +1,36 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import banner from "../../img/Banner.png";
 import "../../styles/home.scss";
+import TradingViewWidget, { Themes } from "react-tradingview-widget";
+import * as CryptoCharts from "cryptocharts";
+import Plugin from "../component/cryptoplugin.js";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	CryptoCharts.roiComparison({
+		chart_id: "mychart",
+		cryptocompare_tickers: ["BTC", "ETH"],
+		iconomi_tickers: ["BLX", "CAR"],
+		last_days: 90
+	});
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">{store.message || "Loading message from the backend..."}</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-					Read documentation
-				</a>
-			</p>
+			<div className="container-fluid">
+				<h1>Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia</h1>
+				<p>
+					<img className="img-fluid" src={banner} />
+				</p>
+				<p>
+					<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
+				</p>
+				<p>
+					<div id="mychart" />
+				</p>
+				<p>
+					<coin-ponent dark-mode border-radius="30" font="monospace" />
+				</p>
+			</div>
 		</div>
 	);
 };
