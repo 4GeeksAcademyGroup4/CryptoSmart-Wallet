@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import LOGO from "../../img/LOGO.png";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
@@ -11,9 +12,15 @@ export const Navbar = () => {
 	};
 	if (!store.isLogged) {
 		return (
-			<nav className="navbar navbar-light bg-light mb-3">
+			<nav className="navbar mb-3">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
+				</Link>
+				<Link to="/" className="nav-item nav-link text-light">
+					ACERCA DE
+				</Link>
+				<Link to="/" className="nav-item nav-link text-light">
+					PRICING
 				</Link>
 				<div className="ml-auto">
 					<Link to="/Register">
@@ -29,7 +36,7 @@ export const Navbar = () => {
 		return (
 			<nav className="navbar navbar-light bg-light mb-3">
 				<Link to="/Home">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
 				<div className="ml-auto">
 					<button className="btn btn-primary" onClick={() => Logout()}>

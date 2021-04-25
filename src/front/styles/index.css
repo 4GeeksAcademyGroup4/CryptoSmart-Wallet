@@ -12,3 +12,12 @@
 .text-font-base {
     font-family: Montserrat,sans-serif!important;
 }
+.navbar, .footer{
+    background-color: #041427;     
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+}
+.footer {
+    display: block !important;
+}
