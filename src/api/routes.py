@@ -189,7 +189,7 @@ def MainBalance(id):
     
     return jsonify(result),200
 
-@api.route('/CreateAccount', methods=["POST"])
+@api.route('/Account', methods=["POST"])
 @jwt_required()
 def CreateAccount():
     data = request.get_json()
@@ -228,7 +228,7 @@ def CreateAccount():
         return jsonify({"msg": "Ya hay una cuenta creada con dicha moneda"}),406 
 
 
-@api.route('/Deposit', methods=["POST"])
+@api.route('/Deposit', methods=["PUT"])
 @jwt_required()
 def Deposit():
     data = request.get_json()
@@ -309,3 +309,25 @@ def History(id):
     result = [item.serialize() for item in Transactions]
 
     return jsonify(result), 200
+
+
+@api.route('/Account/<int:id>', methods=["DELETE"])
+@jwt_required()
+def DeleteAccount(id):
+
+    current_user_id = get_jwt_identity()
+    existAccount = Account.query.filter_by(userID=current_user_id, coinID=id).first()
+
+    if existAccount is None:
+        return jsonify({"msg": "La cuenta seleccionada no existe"}),404   
+    else:
+        Transactions = CryptoTransaction.query.filter(CryptoTransaction.accountID == id)
+        for item in Transactions:
+            db.session.delete(item)
+            db.session.commit()
+        
+        db.session.delete(existAccount)
+        db.session.commit()
+
+        return jsonify({"msg": "Cuenta borrada existosamente"}),200   
+
