@@ -34,7 +34,7 @@ export const Navbar = () => {
 		);
 	} else {
 		return (
-			<nav className="navbar navbar-light bg-light mb-3">
+			<nav className="navbar mb-3">
 				<Link to="/Home">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>

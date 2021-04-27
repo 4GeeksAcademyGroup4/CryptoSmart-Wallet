@@ -32,7 +32,7 @@ const injectContext = PassedComponent => {
 			if (user != undefined) {
 				state.actions.LoginStore();
 			}
-			state.actions.getMessage(); // <---- calling this function from the flux.js actions
+			state.actions.getTop5(); // <---- calling this function from the flux.js actions
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
