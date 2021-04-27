@@ -16,7 +16,7 @@ export const Navbar = () => {
 				<Link to="/">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
-				<Link to="/" className="nav-item nav-link text-light">
+				<Link to="/AboutUs" className="nav-item nav-link text-light">
 					ACERCA DE
 				</Link>
 				<Link to="/" className="nav-item nav-link text-light">
@@ -27,7 +27,9 @@ export const Navbar = () => {
 						<span className="mx-3">Registrarse</span>
 					</Link>
 					<Link to="/Login">
-						<button className="btn btn-primary">Accessar</button>
+						<button className="btn btn-primary">
+							<a className="bx-shadow">Accessar</a>
+						</button>
 					</Link>
 				</div>
 			</nav>
