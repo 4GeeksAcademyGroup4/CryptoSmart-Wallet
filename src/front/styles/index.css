@@ -21,3 +21,6 @@
 .footer {
     display: block !important;
 }
+.login {
+    background-color: black;
+}

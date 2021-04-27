@@ -98,12 +98,12 @@ export const Login = () => {
 							<div className="form-group text-center">
 								<p className="m-0">
 									<Link to="/Register" className="text-center text-font-base">
-										Registrarse como nuevo usuario
+										(Registrarse como nuevo usuario)
 									</Link>
 								</p>
 								<p className="m-0">
 									<Link to="/ForgotPassword" className="text-center text-font-base">
-										Olvido su contraseña?
+										¿Olvido su contraseña?
 									</Link>
 								</p>
 							</div>
