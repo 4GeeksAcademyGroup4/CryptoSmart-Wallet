@@ -73,11 +73,84 @@ export const Landing = () => {
 						</a>
 					</div>
 
-					<div className="py-2">
+					<div className="pt-2 pb-5">
 						<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
 						<Converter />
 					</div>
-
+					<div id="flip-container mb-5">
+						<div className="row">
+							<div className="col  py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="col  py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="col  py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="flip-container mb-5">
+						<div className="row">
+							<div className="col py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="col py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="col py-2">
+								<div className="flip-box">
+									<div className="flip-box-inner">
+										<div className="flip-box-front" />
+										<div className="flip-box-back">
+											<h2>Paris</h2>
+											<p>What an amazing city</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div id="mychart" />
 
 					<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
