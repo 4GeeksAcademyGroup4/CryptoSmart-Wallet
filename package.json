@@ -77,7 +77,6 @@
 	},
 	"dependencies": {
 		"antd": "^4.15.2",
-		"bootstrap": "^4.3.1",
 		"cryptocharts": "^1.1.2",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
