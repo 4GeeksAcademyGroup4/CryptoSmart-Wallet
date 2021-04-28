@@ -3,8 +3,7 @@ import React from "react";
 export const ForgotPassword = () => {
 	return (
 		<div className="container">
-			<h2>RECUPERACIÓN DE CONTRASEÑA</h2>
-
+			<h2>INGRESE SU CORREO REGISTRADO</h2>
 			<article className="card-body mx-auto py-0">
 				<div className="jumbotron">
 					<div className="mb-5 row">
