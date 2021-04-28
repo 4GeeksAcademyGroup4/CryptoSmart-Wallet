@@ -75,14 +75,13 @@ export const Register = () => {
 		);
 	} else {
 		return (
-			<section className="container mw-90 bg-warning w-50">
-				<div id="maindiv" className="card-contact card border-5 border-white mw-100 mx-auto">
-					<div className="text-center mt-3">
-						<h2 className="mb-0 mt-3 text-font-base text-white">Unete a CryptoSmart Wallet</h2>
-						<br />
-					</div>
-
-					<div id="articlediv" className="card-contact card border-0 mw-100 mx-auto">
+			<section id="R1" className="container">
+				<div className="text-center mt-3">
+					<h2 className="mb-0 mt-3 text-font-base text-white">Unete a CryptoSmart Wallet</h2>
+					<br />
+				</div>
+				<div id="R2" className="card-contact card border-5 border-white mw-100 mx-auto">
+					<div id="R3" className="card-contact card mw-100 mx-auto">
 						<article className="card-body mx-auto py-0">
 							<form onSubmit={handleSubmit}>
 								<div className="form-group input-group mb-0">
