@@ -36,10 +36,7 @@ class CoinMarketCap {
 			redirect: "follow"
 		};
 
-		return await fetch(
-			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=" + id.toString(),
-			requestOptions
-		)
+		return await fetch("https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=" + id, requestOptions)
 			.then(response => {
 				if (response.status === 200) {
 					return response.json();

@@ -3,39 +3,43 @@ import { Context } from "../store/appContext";
 import { Redirect, Link } from "react-router-dom";
 import { Tooltip, Menu, Dropdown } from "antd";
 
-import CryptoAccounts from "../services/cryptoaccount";
 import { CoinHome } from "../component/coinHome";
+import { BtnDeposit } from "../component/btnDeposit";
+import { BtnTransfer } from "../component/btnTransfer";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const [accounts, setAccounts] = useState([]);
 	const user = localStorage.getItem("user");
-	const CryptoAccountsSVC = new CryptoAccounts();
 
 	async function GetAccount() {
-		const response = await CryptoAccountsSVC.MainBalance(0).then(res => {
-			setAccounts(res);
-		});
+		// const response = await CryptoAccountsSVC.MainBalance(0).then(res => {
+		// 	setAccounts(res);
+		// });
+		actions.UpdateAccounts();
 	}
 
 	useEffect(() => {
 		GetAccount();
 	}, []);
 
-	const menu = accountID => (
+	function DeleteAccount(id) {
+		var x = confirm("Esta seguro que quiere eliminar esta cuenta???");
+		if (x) {
+			console.log(id);
+		}
+	}
+	const menu = account => (
 		<Menu>
 			<Menu.Item key="0">
-				<a>Depositar {accountID}</a>
+				<BtnDeposit Account={account} TypeLink="link" />
 			</Menu.Item>
 			<Menu.Item key="1">
 				<a>Transferir </a>
 			</Menu.Item>
-			<Menu.Item key="3">
-				<a>Ver Transacciones </a>
-			</Menu.Item>
+			<Menu.Item key="3">{/* <BtnTransfer Account={account} TypeLink="link" /> */}</Menu.Item>
 			<Menu.Divider />
 			<Menu.Item key="4">
-				<a className="text-danger">
+				<a className="text-danger" onClick={() => DeleteAccount(account.accountID)}>
 					Eliminar Cuenta <i className="far fa-times-circle align-middle" />
 				</a>
 			</Menu.Item>
@@ -50,13 +54,11 @@ export const Home = () => {
 				<div className="row row-cols-2 mx-auto">
 					<div className="col-xl-6 main-column">
 						<div className="bg-dark text-center my-2 py-2 rounded">
-							<h2 className="text-primary-color text-uppercase text-font-base m-0">
-								Resumen de productos
-							</h2>
+							<h2 className="text-primary-color text-uppercase text-font-base m-0">Top 6 de Mercado</h2>
 						</div>
 						<div className="row row-cols-3 m-0 p-0 w-100">
 							{store.Top5Coins.map((item, i) => {
-								return <CoinHome CoinID={item.id} key={i} />;
+								return <CoinHome CoinSymbol={item.symbol} key={i} />;
 							})}
 						</div>
 					</div>
@@ -78,7 +80,7 @@ export const Home = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{accounts.map((item, i) => {
+									{store.UserAccounts.map((item, i) => {
 										return (
 											<tr key={i}>
 												<td>
@@ -98,12 +100,12 @@ export const Home = () => {
 												</td>
 												<td className="text-center">
 													<Tooltip placement="top" title="Transferir" color="red">
-														<i className="fas fa-angle-double-right fa-2x" />
+														{/* <BtnTransfer Account={item} TypeLink="btn" /> */}
 													</Tooltip>
 												</td>
 												<td className="text-center">
 													<Tooltip placement="top" title="Administrar" color="blue">
-														<Dropdown overlay={menu(item.accountID)} trigger={["click"]}>
+														<Dropdown overlay={menu(item)} trigger={["click"]}>
 															<a
 																className="ant-dropdown-link text-black"
 																onClick={e => e.preventDefault()}>

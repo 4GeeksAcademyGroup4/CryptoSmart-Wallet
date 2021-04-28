@@ -84,7 +84,7 @@
 
 /* Style the front side (fallback if image is missing) */
 .flip-box-front {
-  background-color: #bbb;
+  background-color: black;
   color: black;
 }
 
@@ -93,4 +93,15 @@
   background-color: #4efffd;
   color: white;
   transform: rotateY(180deg);
+}
+.ant-modal-close {
+    display: none !important;
+}
+
+.ant-modal-header, .ant-modal-footer {
+    background-color: black !important;
+}
+
+.card-body-deposit {
+    width: 300px;
 }

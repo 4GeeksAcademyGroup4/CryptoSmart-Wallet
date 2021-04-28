@@ -1,16 +1,19 @@
 //import { CryptoUsers } from "../services/cryptouser.js";
 
 import CoinMarketCap from "../services/coinmarketcap";
+import CryptoAccounts from "../services/cryptoaccount";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	//const CryptoUsersSVC = new CryptoUsers();
 	const CoinMarketCapSVC = new CoinMarketCap();
+	const CryptoAccountsSVC = new CryptoAccounts();
 
 	return {
 		store: {
 			message: null,
 			isLogged: false,
-			Top5Coins: []
+			Top5Coins: [],
+			UserAccounts: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -30,6 +33,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getTop5: () => {
 				CoinMarketCapSVC.Latest().then(items => {
 					setStore({ Top5Coins: items });
+				});
+			},
+			UpdateAccounts: () => {
+				CryptoAccountsSVC.MainBalance(0).then(res => {
+					setStore({ UserAccounts: res });
 				});
 			}
 		}
