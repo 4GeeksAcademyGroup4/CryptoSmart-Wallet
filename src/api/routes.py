@@ -336,7 +336,7 @@ def Transfer():
 
             if ToAccount is None:
                 newaccount = Account(
-                    UserFinal.id, data["coinID"], data["amount"])
+                    UserFinal.id, data["coinID"], 0)
                 db.session.add(newaccount)
                 db.session.commit()
 
@@ -345,6 +345,7 @@ def Transfer():
 
             # Retiro
             FromAccount.Deposit((0-data["amount"]))
+            db.session.flush()
             db.session.commit()
 
             newtrans = CryptoTransaction(
@@ -354,6 +355,7 @@ def Transfer():
 
             # Deposito
             ToAccount.Deposit(data["amount"])
+            db.session.flush()
             db.session.commit()
 
             newtrans = CryptoTransaction(
