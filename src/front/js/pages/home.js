@@ -11,15 +11,9 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const user = localStorage.getItem("user");
 
-	async function GetAccount() {
-		// const response = await CryptoAccountsSVC.MainBalance(0).then(res => {
-		// 	setAccounts(res);
-		// });
-		actions.UpdateAccounts();
-	}
-
 	useEffect(() => {
-		GetAccount();
+		actions.getTop5();
+		actions.UpdateAccounts();
 	}, []);
 
 	function DeleteAccount(id) {
