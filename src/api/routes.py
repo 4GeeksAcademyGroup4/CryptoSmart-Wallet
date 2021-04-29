@@ -295,7 +295,6 @@ def Deposit():
 
     # Deposit
     FromAccount.Deposit(data["amount"])
-    db.session.flush()
     db.session.commit()
 
     newtrans = CryptoTransaction(
@@ -346,7 +345,6 @@ def Transfer():
 
             # Retiro
             FromAccount.Deposit((0-data["amount"]))
-            db.session.flush()
             db.session.commit()
 
             newtrans = CryptoTransaction(
@@ -356,7 +354,6 @@ def Transfer():
 
             # Deposito
             ToAccount.Deposit(data["amount"])
-            db.session.flush()
             db.session.commit()
 
             newtrans = CryptoTransaction(
