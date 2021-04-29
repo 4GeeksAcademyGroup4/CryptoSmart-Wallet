@@ -25,6 +25,7 @@ export const BtnTransfer = props => {
 		};
 		console.log(model);
 		const response = CryptoAccountsSVC.Transfer(model).then(res => {
+			console.log(res);
 			if (res.StatusID === 200) {
 				setMsg(res.msg);
 				//setIsModalVisible(false);

@@ -83,6 +83,7 @@ class Account(db.Model):
     coinID = db.Column(db.Integer, db.ForeignKey('coins.id'))
     balance = db.Column(db.Float,unique=False, nullable=False)
     transactions = db.relationship('CryptoTransaction',backref='account')
+    adjustments = db.relationship('AccountAdjustments',backref='account')
 
     def __repr__(self):
         return '<Account %r>' % self.userID
@@ -94,6 +95,9 @@ class Account(db.Model):
         
     def Deposit(self, amount):
         self.balance = self.balance + amount
+
+    def SetBalance(self, amount):
+        self.balance = amount
 
     def serializebyUser(self):
         if self.coin:
@@ -112,6 +116,31 @@ class Account(db.Model):
             "userID": self.userID,
             "balance": self.balance,
             # do not serialize the password, its a security breach
+        }
+
+class AccountAdjustments(db.Model):
+    __tablename__ = "adjustments"
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime,unique=False, nullable=False)
+    accountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
+    newbalance = db.Column(db.Float,unique=False, nullable=False)
+    reason = db.Column(db.String(500), unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<AccountAdjustments %r>' % self.accountID
+
+    def __init__(self, date, accountID, newbalance, reason):
+        self.date = date,
+        self.accountID = accountID,
+        self.newbalance = newbalance,
+        self.reason = reason
+
+    def serialize(self):
+        return {
+            "date": self.date,
+            "accountID": self.accountID,
+            "newbalance":self.newbalance,
+            "reason":self.reason
         }
 
 class CryptoTransaction(db.Model):

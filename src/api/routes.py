@@ -12,7 +12,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 from basicauth import decode
-from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction
+from api.models import db, CryptoUser, Account, CryptoCoins, CryptoTransaction, AccountAdjustments
 from api.utils import generate_sitemap, APIException
 from functools import wraps
 from dateutil.relativedelta import relativedelta
@@ -280,6 +280,26 @@ def CreateAccount():
 @jwt_required()
 def Deposit():
     data = request.get_json()
+
+    if data is None:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "La solicitud es Invalida"}), 400
+
+    if 'coinID' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el ID de la moneda"}), 400
+    if 'amount' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la cantidad"}), 400
+
+    if 'date' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la cantidad"}), 400
+
     current_user_id = get_jwt_identity()
     FromAccount = Account.query.filter_by(
         userID=current_user_id, coinID=data["coinID"]).first()
@@ -304,6 +324,64 @@ def Deposit():
 
     return jsonify({"msg": "El Deposito se realizó satisfactoriamente"}), 200
 
+
+@api.route('/Adjust', methods=["PUT"])
+@jwt_required()
+def Adjust():
+    data = request.get_json()
+
+    if data is None:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "La solicitud es Invalida"}), 400
+
+    if 'accountID' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el ID de la moneda"}), 400
+
+    if 'newBalance' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el nuevo balance"}), 400
+
+    if 'reason' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la rason del ajuste"}), 400
+
+    if 'date' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la cantidad"}), 400
+
+    current_user_id = get_jwt_identity()
+    FromAccount = Account.query.get(data["accountID"])
+    InitialBalance = FromAccount.balance
+
+    # Varification if Exist Account
+    if FromAccount is None:
+        return jsonify({
+                "StatusID": 404,
+                "msg": "La cuenta seleccionada no existe"}), 404
+
+    # Set Balance
+    FromAccount.SetBalance(data["newBalance"])
+    db.session.commit()
+
+    # Set Adjusments
+    newAdjustment = AccountAdjustments(data["date"], data["accountID"], data["newBalance"],data["reason"])
+    db.session.add(newAdjustment)
+    db.session.commit()
+
+    #Set Transactions
+    adjust = data["newBalance"] - InitialBalance
+    newtrans = CryptoTransaction(
+        data["date"], current_user_id, current_user_id, data["accountID"], adjust)
+    db.session.add(newtrans)
+    db.session.commit()
+
+    return jsonify({"msg": "El saldo se ajustó satisfactoriamente"}), 200
 
 @api.route('/Transfer', methods=["POST"])
 @jwt_required()
