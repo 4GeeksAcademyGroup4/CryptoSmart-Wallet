@@ -184,7 +184,7 @@ def ForgotPassword(id):
 
         # The mail addresses and password
         sender_address = 'alejoguma94@gmail.com'
-        sender_pass = '$1234QWer$'
+        sender_pass = '1234QWer@$#'
         receiver_address = user.email
         # Setup the MIME
         message = MIMEMultipart()
