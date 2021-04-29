@@ -21,7 +21,7 @@ export const ForgotPassword = () => {
 							</div>
 
 							<div className="form-group text-center mt-3">
-								<button id="Rbutton" className="btn btn-outline-primary text-font-base btn-block">
+								<button id="Fbutton" className="btn btn-outline-primary text-font-base btn-block">
 									GENERAR CONTRASEÑA
 								</button>
 							</div>
