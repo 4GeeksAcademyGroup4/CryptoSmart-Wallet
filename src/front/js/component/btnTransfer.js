@@ -1,46 +1,51 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useForm } from "react-hook-form";
 import PropType from "prop-types";
-import { Modal } from "antd";
+import { Modal, Tooltip, message } from "antd";
 import CryptoAccounts from "../services/cryptoaccount";
 
 export const BtnTransfer = props => {
-	const { actions } = useContext(Context);
-	const [inputAmount, setAmount] = useState("");
+	const { store, actions } = useContext(Context);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const CryptoAccountsSVC = new CryptoAccounts();
 	const [SuccessMsg, setMsg] = useState("");
 
-	async function fnDetail() {
-		// const response = await CoinMarketCapSVC.Detail(props.CoinID).then(res => {
-		// 	//console.log(res);
-		// 	setCoin(res);
-		// });
-	}
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm();
+
+	const onSubmit = data => {
+		let model = {
+			coinID: props.Account.coinID,
+			amount: parseFloat(data.amount),
+			UserCode: data.UserCode
+		};
+		console.log(model);
+		const response = CryptoAccountsSVC.Transfer(model).then(res => {
+			if (res.StatusID === 200) {
+				setMsg(res.msg);
+				//setIsModalVisible(false);
+			} else {
+				message.error({
+					content: res.msg,
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			}
+		});
+	};
 
 	const cleanFields = () => {
 		setIsModalVisible(false);
-		setAmount("");
+		//setAmount("");
 		setMsg("");
 	};
 	const showModal = () => {
 		setIsModalVisible(true);
-	};
-
-	const handleOk = event => {
-		//console.log(parseFloat(inputAmount));
-		let model = {
-			coinID: props.Account.coinID,
-			amount: parseFloat(inputAmount)
-		};
-		const response = CryptoAccountsSVC.DirectDeposit(model).then(res => {
-			if (res != undefined) {
-				setMsg(res.msg);
-				//setIsModalVisible(false);
-			}
-		});
-
-		event.preventDefault();
 	};
 
 	const handleCancel = event => {
@@ -48,15 +53,15 @@ export const BtnTransfer = props => {
 		event.preventDefault();
 	};
 
-	useEffect(() => {
-		//fnDetail();
-	}, []);
-
 	const TypeLinkBtn = () => {
 		if (props.TypeLink === "btn") {
-			return <i className="fas fa-angle-double-right fa-2x" onClick={showModal} />;
+			return (
+				<Tooltip placement="top" title="Transferir" color="red">
+					<i className="link-a fas fa-angle-double-right fa-2x" onClick={showModal} />
+				</Tooltip>
+			);
 		} else {
-			return <a onClick={showModal}>Depositar</a>;
+			return <a onClick={showModal}>Transferir</a>;
 		}
 	};
 
@@ -80,7 +85,7 @@ export const BtnTransfer = props => {
 		} else {
 			return (
 				<article className="card-body mx-auto py-0 card-body-deposit">
-					<form className="" onSubmit={handleOk}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className="form-group input-group mb-3">
 							<div className="input-group-prepend">
 								<span className="input-group-text">
@@ -95,31 +100,67 @@ export const BtnTransfer = props => {
 								disabled
 							/>
 						</div>
-						<div className="form-group input-group mb-0">
+						<div className="form-group input-group m-0">
 							<div className="input-group-prepend">
 								<span className="input-group-text">0.00</span>
 							</div>
 							<input
-								type="text"
-								id="amount"
-								//key={uuid()}
-								value={inputAmount}
-								placeholder="Monto"
-								onChange={e => setAmount(e.target.value)}
+								defaultValue=""
+								type="number"
+								{...register("amount", {
+									validate: {
+										positiveNumber: value => parseFloat(value) > 0,
+										maxAvailable: value => parseFloat(value) <= props.Account.balance
+									}
+								})}
 								className="form-control"
-								required
-								autoFocus
 							/>
 						</div>
-
+						<div className="form-group mb-3">
+							{errors.amount &&
+								errors.amount.type === "positiveNumber" && (
+									<label className="col text-danger p-0">
+										<i className="fas fa-times-circle" />
+										El monto debe ser mayor a 0
+									</label>
+								)}
+							{errors.amount &&
+								errors.amount.type === "maxAvailable" && (
+									<label className="text-danger p-0">
+										<i className="fas fa-times-circle" />
+										El monto excede su disponible
+									</label>
+								)}
+						</div>
+						<div className="form-group input-group m-0">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="fas fa-user" />
+								</span>
+							</div>
+							<input
+								defaultValue=""
+								placeholder="UserCode"
+								{...register("UserCode", {
+									validate: value => value.length >= 3
+								})}
+								className="form-control"
+							/>
+						</div>
+						<div className="form-group mb-1">
+							{errors.UserCode && (
+								<label className="col text-danger p-0">
+									<i className="fas fa-times-circle" />
+									El UserCode debe tener al menos 3 caracteres
+								</label>
+							)}
+						</div>
 						<div className="form-group text-center mt-3 mb-0">
-							<button
-								className="btn btn-outline-primary text-font-base btn-block"
-								onClick={handleOk}
-								disabled={inputAmount > 0 ? false : true}>
-								Depositar
+							<button className="btn btn-outline-primary text-font-base btn-block" type="submit">
+								Transferir
 							</button>
 						</div>
+
 						<div className="form-group text-center mt-2 mb-0">
 							<button className="btn btn-outline-danger text-font-base btn-block" onClick={handleCancel}>
 								Cancelar
@@ -141,7 +182,6 @@ export const BtnTransfer = props => {
 					</h3>
 				]}
 				visible={isModalVisible}
-				onOk={handleOk}
 				centered
 				onCancel={handleCancel}
 				footer={[]}>

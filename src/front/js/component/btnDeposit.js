@@ -99,12 +99,12 @@ export const BtnDeposit = props => {
 								disabled
 							/>
 						</div>
-						<div className="form-group input-group mb-0">
+						<div className="form-group input-group mb-3">
 							<div className="input-group-prepend">
 								<span className="input-group-text">0.00</span>
 							</div>
 							<input
-								type="text"
+								type="number"
 								id="amount"
 								//key={uuid()}
 								value={inputAmount}

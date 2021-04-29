@@ -34,9 +34,11 @@ export const Home = () => {
 				<BtnDeposit Account={account} TypeLink="link" />
 			</Menu.Item>
 			<Menu.Item key="1">
-				<a>Transferir </a>
+				<BtnTransfer Account={account} TypeLink="link" />
 			</Menu.Item>
-			<Menu.Item key="3">{/* <BtnTransfer Account={account} TypeLink="link" /> */}</Menu.Item>
+			<Menu.Item key="3">
+				<a>Ver Transacciones</a>
+			</Menu.Item>
 			<Menu.Divider />
 			<Menu.Item key="4">
 				<a className="text-danger" onClick={() => DeleteAccount(account.accountID)}>
@@ -99,9 +101,7 @@ export const Home = () => {
 													</Tooltip>
 												</td>
 												<td className="text-center">
-													<Tooltip placement="top" title="Transferir" color="red">
-														{/* <BtnTransfer Account={item} TypeLink="btn" /> */}
-													</Tooltip>
+													<BtnTransfer Account={item} TypeLink="btn" />
 												</td>
 												<td className="text-center">
 													<Tooltip placement="top" title="Administrar" color="blue">

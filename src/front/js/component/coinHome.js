@@ -22,14 +22,14 @@ export const CoinHome = props => {
 	function CheckCurrentAccount() {
 		store.UserAccounts.forEach(item => {
 			if (item.coin.symbol == props.CoinSymbol) {
-				console.log(item.coin.symbol, ":", props.CoinSymbol);
+				//console.log(item.coin.symbol, ":", props.CoinSymbol);
 				SetExistingAcccount(item);
 			}
 		});
 	}
 
 	useEffect(() => {
-		//fnDetail();
+		fnDetail();
 		CheckCurrentAccount();
 	}, []);
 
@@ -39,24 +39,18 @@ export const CoinHome = props => {
 				<div className="flip-box">
 					<div className="flip-box-inner">
 						<div className="flip-box-front">
-							<img src={rigoURL} className="w-100 px-3 pt-3" />
-							{/* <img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" /> */}
+							{/* <img src={rigoURL} className="w-100 px-3 pt-3" /> */}
+							<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
 						</div>
 						<div className="flip-box-back p-3">
-							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p>
 							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p> */}
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p> */}
+							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p>
 							<BtnDeposit Account={ExistingAccount} TypeLink="btn" />
 						</div>
 					</div>
 				</div>
-				{/* <div className="bg-dark rounded">
-                <img src={Coin.logo} className="w-100 px-4 pt-3" />
-                <img src={rigoURL} className="w-100 px-3 pt-3" />
-                <p className="m-0 text-white">{Coin.name}</p>
-                <p className="m-0 text-white">Bitcoin (BTC)</p>
-            </div> */}
 			</div>
 		);
 	} else {
@@ -65,24 +59,18 @@ export const CoinHome = props => {
 				<div className="flip-box">
 					<div className="flip-box-inner">
 						<div className="flip-box-front">
-							<img src={rigoURL} className="w-100 px-3 pt-3" />
-							{/* <img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" /> */}
+							{/* <img src={rigoURL} className="w-100 px-3 pt-3" /> */}
+							<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
 						</div>
 						<div className="flip-box-back p-3">
-							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p>
 							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p> */}
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p> */}
+							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p>
 							<button className="btn btn-outline-dark my-3">Abrir cuenta</button>
 						</div>
 					</div>
 				</div>
-				{/* <div className="bg-dark rounded">
-                <img src={Coin.logo} className="w-100 px-4 pt-3" />
-                <img src={rigoURL} className="w-100 px-3 pt-3" />
-                <p className="m-0 text-white">{Coin.name}</p>
-                <p className="m-0 text-white">Bitcoin (BTC)</p>
-            </div> */}
 			</div>
 		);
 	}
