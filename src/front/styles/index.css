@@ -17,9 +17,23 @@
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bold;
+    margin-top: 5px ;
 }
 .footer {
     display: block !important;
+}
+
+.bg-pcolor {
+     background-color: #041427;  
+}
+
+.tx-white{
+     color: white!important;
+}
+
+.bx-shadow{
+text-shadow: 4px 3px 3px black;
+color: white;
 }
 
 .text-primary-color {
@@ -50,7 +64,23 @@
     font-size: 1.5em;
 }
 
-.flip-box {
+.ant-modal-close {
+    display: none !important;
+}
+
+.ant-modal-header, .ant-modal-footer {
+    background-color: black !important;
+}
+
+.card-body-deposit {
+    width: 300px;
+}
+
+.link-a {
+    cursor: pointer;
+}
+
+.flip-box-homepage {
   background-color: transparent;
   width: 165px;
   height: 145px;
@@ -59,8 +89,55 @@
 }
 
 /* This container is needed to position the front and back side */
+.flip-box-inner-homepage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box-homepage:hover .flip-box-inner-homepage {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front-homepage, .flip-box-back-homepage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front-homepage {
+  background-color: black;
+  color: black;
+}
+
+/* Style the back side */
+.flip-box-back-homepage {
+  background-color: #4efffd;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+
+.flip-box {
+  background-color: transparent;
+  border-radius: 25px;
+  width: 350px;
+  height: 250px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
 .flip-box-inner {
   position: relative;
+  border-radius: 25px;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -78,34 +155,23 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  border-radius: 25px;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
 }
 
 /* Style the front side (fallback if image is missing) */
 .flip-box-front {
-  background-color: black;
+   background-color: #041427;
   color: black;
+  border-radius: 25px;
+
 }
 
 /* Style the back side */
 .flip-box-back {
-  background-color: #4efffd;
+  background-color: dodgerblue;
   color: white;
+  border-radius: 25px;
   transform: rotateY(180deg);
-}
-.ant-modal-close {
-    display: none !important;
-}
-
-.ant-modal-header, .ant-modal-footer {
-    background-color: black !important;
-}
-
-.card-body-deposit {
-    width: 300px;
-}
-
-.link-a {
-    cursor: pointer;
 }
