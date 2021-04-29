@@ -17,7 +17,71 @@
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: bold;
+    margin-top: 5px ;
 }
 .footer {
     display: block !important;
+}
+
+.bg-pcolor {
+     background-color: #041427;  
+}
+
+.tx-white{
+     color: white!important;
+}
+
+.bx-shadow{
+text-shadow: 4px 3px 3px black;
+color: white;
+}
+
+.flip-box {
+  background-color: transparent;
+  border-radius: 25px;
+  width: 350px;
+  height: 250px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  border-radius: 25px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+   background-color: #041427;
+  color: black;
+  border-radius: 25px;
+
+}
+
+/* Style the back side */
+.flip-box-back {
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 25px;
+  transform: rotateY(180deg);
 }
