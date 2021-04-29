@@ -36,6 +36,96 @@ text-shadow: 4px 3px 3px black;
 color: white;
 }
 
+.text-primary-color {
+    color: #4efffd;
+}
+
+.btn-primary-color {
+    border-color: #4efffd;
+    color: #4efffd;
+    background-color: transparent;
+}
+
+.mw-coins {
+    max-width: 220px;
+}
+.mw-100 {
+    max-width: 100%;
+}
+.mh-100 {
+    max-height: 100%;
+}
+
+.main-column {
+    max-width: 100%;
+    min-width: 550px;
+}
+.fa-15x {
+    font-size: 1.5em;
+}
+
+.ant-modal-close {
+    display: none !important;
+}
+
+.ant-modal-header, .ant-modal-footer {
+    background-color: black !important;
+}
+
+.card-body-deposit {
+    width: 300px;
+}
+
+.link-a {
+    cursor: pointer;
+}
+
+.flip-box-homepage {
+  background-color: transparent;
+  width: 165px;
+  height: 145px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner-homepage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box-homepage:hover .flip-box-inner-homepage {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front-homepage, .flip-box-back-homepage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front-homepage {
+  background-color: black;
+  color: black;
+}
+
+/* Style the back side */
+.flip-box-back-homepage {
+  background-color: #4efffd;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+
 .flip-box {
   background-color: transparent;
   border-radius: 25px;

@@ -16,32 +16,30 @@ export const Navbar = () => {
 				<Link to="/">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
-				<Link to="/AboutUs" className="nav-item nav-link text-light">
+				<Link to="/" className="nav-item nav-link text-primary-color">
 					ACERCA DE
 				</Link>
-				<Link to="/" className="nav-item nav-link text-light">
+				<Link to="/" className="nav-item nav-link text-primary-color">
 					PRICING
 				</Link>
 				<div className="ml-auto">
 					<Link to="/Register">
-						<span className="mx-3">Registrarse</span>
+						<span className="mx-3 text-primary-color">Registrarse</span>
 					</Link>
 					<Link to="/Login">
-						<button className="btn btn-primary">
-							<a className="bx-shadow">Accessar</a>
-						</button>
+						<button className="btn btn-primary btn-primary-color">Accessar</button>
 					</Link>
 				</div>
 			</nav>
 		);
 	} else {
 		return (
-			<nav className="navbar navbar-light bg-light mb-3">
+			<nav className="navbar mb-3">
 				<Link to="/Home">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
 				<div className="ml-auto">
-					<button className="btn btn-primary" onClick={() => Logout()}>
+					<button className="btn btn-primary btn-primary-color" onClick={() => Logout()}>
 						Salir
 					</button>
 				</div>
