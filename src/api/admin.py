@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, CryptoUser, CryptoCoins, Account, CryptoTransaction, AccountAdjustments
+from .models import db, CryptoUser, CryptoCoins, Account, CryptoTransaction
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -16,7 +16,6 @@ def setup_admin(app):
     admin.add_view(ModelView(CryptoCoins, db.session))
     admin.add_view(ModelView(Account, db.session))
     admin.add_view(ModelView(CryptoTransaction, db.session))
-    admin.add_view(ModelView(AccountAdjustments, db.session))
 
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))
