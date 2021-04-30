@@ -66,7 +66,6 @@ def FillCryptoData():
     return jsonify({"msg": "Cryptomonedas agregadas exitosamente"}), 200
 
 @api.route('/CryptoCoins', methods=["GET"])
-@jwt_required()
 def GetCryptoCoins():
     coins = CryptoCoins.query.all()
     # request_body = list(map(lambda x:x.serialize(),users))

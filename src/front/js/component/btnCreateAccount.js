@@ -1,15 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useForm } from "react-hook-form";
 import PropType from "prop-types";
 import { Modal, message } from "antd";
+
 import CryptoAccounts from "../services/cryptoaccount";
 
 export const BtnCreateAccount = props => {
-	const { actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const CryptoAccountsSVC = new CryptoAccounts();
 	const [SuccessMsg, setMsg] = useState("");
+
+	const CryptoAccountsSVC = new CryptoAccounts();
+	const CryptoCoinSVC = new CryptoCoins();
 
 	const {
 		register,
