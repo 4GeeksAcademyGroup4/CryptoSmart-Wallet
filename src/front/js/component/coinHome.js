@@ -29,24 +29,24 @@ export const CoinHome = props => {
 	}
 
 	useEffect(() => {
-		fnDetail();
+		//fnDetail();
 		CheckCurrentAccount();
 	}, []);
 
 	if (ExistingAccount.accountID != undefined) {
 		return (
 			<div className="col-sm-4 text-center p-1 mw-coins">
-				<div className="flip-box">
-					<div className="flip-box-inner">
-						<div className="flip-box-front">
-							{/* <img src={rigoURL} className="w-100 px-3 pt-3" /> */}
-							<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
+				<div className="flip-box-homepage">
+					<div className="flip-box-inner-homepage">
+						<div className="flip-box-front-homepage">
+							<img src={rigoURL} className="w-100 px-3 pt-3" />
+							{/* <img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" /> */}
 						</div>
-						<div className="flip-box-back p-3">
-							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p> */}
+						<div className="flip-box-back-homepage p-3">
 							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p>
+							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p> */}
 							<BtnDeposit Account={ExistingAccount} TypeLink="btn" />
 						</div>
 					</div>
@@ -56,17 +56,17 @@ export const CoinHome = props => {
 	} else {
 		return (
 			<div className="col-sm-4 text-center p-1 mw-coins">
-				<div className="flip-box">
-					<div className="flip-box-inner">
-						<div className="flip-box-front">
-							{/* <img src={rigoURL} className="w-100 px-3 pt-3" /> */}
-							<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
+				<div className="flip-box-homepage">
+					<div className="flip-box-inner-homepage">
+						<div className="flip-box-front-homepage">
+							<img src={rigoURL} className="w-100 px-3 pt-3" />
+							{/* <img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" /> */}
 						</div>
-						<div className="flip-box-back p-3">
-							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p> */}
+						<div className="flip-box-back-homepage p-3">
 							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p>
+							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p> */}
 							<button className="btn btn-outline-dark my-3">Abrir cuenta</button>
 						</div>
 					</div>

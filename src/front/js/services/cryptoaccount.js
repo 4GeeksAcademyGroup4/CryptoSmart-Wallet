@@ -77,9 +77,10 @@ class CryptoAccounts {
 
 		var raw = JSON.stringify({
 			date: moment().format(),
-			coinID: model.coinID,
+			accountID: model.accountID,
 			amount: model.amount,
-			UserCode: model.UserCode
+			UserCode: model.UserCode,
+			reason: model.reason
 		});
 		//console.log(model);
 		//console.log(raw);
