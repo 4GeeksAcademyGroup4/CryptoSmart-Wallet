@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import PropType from "prop-types";
 import { Modal } from "antd";
@@ -10,13 +10,6 @@ export const BtnDeposit = props => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const CryptoAccountsSVC = new CryptoAccounts();
 	const [SuccessMsg, setMsg] = useState("");
-
-	async function fnDetail() {
-		// const response = await CoinMarketCapSVC.Detail(props.CoinID).then(res => {
-		// 	//console.log(res);
-		// 	setCoin(res);
-		// });
-	}
 
 	const cleanFields = () => {
 		setIsModalVisible(false);
@@ -47,10 +40,6 @@ export const BtnDeposit = props => {
 		cleanFields();
 		event.preventDefault();
 	};
-
-	useEffect(() => {
-		//fnDetail();
-	}, []);
 
 	const TypeLinkBtn = () => {
 		if (props.TypeLink === "btn") {

@@ -5,6 +5,7 @@ import CoinMarketCap from "../services/coinmarketcap";
 import rigoURL from "../../img/rigo-baby.jpg";
 
 import { BtnDeposit } from "./btnDeposit";
+import { BtnCreateAccount } from "./btnCreateAccount";
 
 export const CoinHome = props => {
 	const { store, actions } = useContext(Context);
@@ -67,7 +68,7 @@ export const CoinHome = props => {
 							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p>
 							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
 							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p> */}
-							<button className="btn btn-outline-dark my-3">Abrir cuenta</button>
+							<BtnCreateAccount CoinID={props.coinID} />
 						</div>
 					</div>
 				</div>

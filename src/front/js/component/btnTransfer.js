@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useForm } from "react-hook-form";
 import PropType from "prop-types";
@@ -6,7 +6,7 @@ import { Modal, Tooltip, message } from "antd";
 import CryptoAccounts from "../services/cryptoaccount";
 
 export const BtnTransfer = props => {
-	const { store, actions } = useContext(Context);
+	const { actions } = useContext(Context);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const CryptoAccountsSVC = new CryptoAccounts();
 	const [SuccessMsg, setMsg] = useState("");
