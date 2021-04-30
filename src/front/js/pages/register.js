@@ -75,7 +75,7 @@ export const Register = () => {
 		);
 	} else {
 		return (
-			<section id="R1" className="container">
+			<section id="R1" className="container ">
 				<div className="text-center mt-3">
 					<h2 className="mb-0 mt-3 text-font-base text-white">Unete a CryptoSmart Wallet</h2>
 					<br />
