@@ -88,7 +88,7 @@ export const Login = () => {
 										type="password"
 										id="password"
 										value={inputPassword}
-										onChange={e => setPasswordValue(e.target.value)}
+										onChange={e => setPwdValue(e.target.value)}
 										placeholder="Contraseña"
 										className="form-control"
 										required

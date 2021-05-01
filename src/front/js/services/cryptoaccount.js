@@ -135,6 +135,41 @@ class CryptoAccounts {
 			})
 			.catch(error => console.log("error:", error));
 	}
+
+	async AdjustBalance(model) {
+		let baseURL = process.env.BACKEND_URL + "/api/Adjust";
+		var myHeaders = new Headers();
+		var AuthUser = JSON.parse(localStorage.getItem("user"));
+		let AuthHeader = "Bearer " + AuthUser.token;
+
+		myHeaders.append("Authorization", AuthHeader);
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify({
+			date: moment().format(),
+			accountID: model.accountID,
+			newBalance: model.newBalance,
+			reason: model.reason
+		});
+		//console.log(model);
+		//console.log(raw);
+
+		var requestOptions = {
+			method: "PUT",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL, requestOptions)
+			.then(res => {
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
 }
 
 export default CryptoAccounts;

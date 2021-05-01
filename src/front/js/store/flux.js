@@ -40,12 +40,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			getCoinList: () => {
 				CryptoCoinSVC.GetList().then(items => {
-					setStore({ CryptoCoinsList: items });
+					const sorted = items.sort((a, b) => (a.name > b.name ? 1 : -1));
+					setStore({ CryptoCoinsList: sorted });
 				});
 			},
 			UpdateAccounts: () => {
 				CryptoAccountsSVC.MainBalance(0).then(res => {
-					setStore({ UserAccounts: res });
+					const sorted = res.sort((a, b) => (a.coin.name > b.coin.name ? 1 : -1));
+					//console.log(sorted);
+					setStore({ UserAccounts: sorted });
 				});
 			}
 		}

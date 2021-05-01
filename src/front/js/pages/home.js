@@ -6,6 +6,8 @@ import { Tooltip, Menu, Dropdown } from "antd";
 import { CoinHome } from "../component/coinHome";
 import { BtnDeposit } from "../component/btnDeposit";
 import { BtnTransfer } from "../component/btnTransfer";
+import { BtnCreateAccount } from "../component/btnCreateAccount";
+import { BtnAdjust } from "../component/btnAdjust";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -34,7 +36,7 @@ export const Home = () => {
 				<a>Ver Transacciones</a>
 			</Menu.Item>
 			<Menu.Item key="4">
-				<a>Ajustar Balance</a>
+				<BtnAdjust Account={account} />
 			</Menu.Item>
 			<Menu.Divider />
 			<Menu.Item key="5">
@@ -68,7 +70,7 @@ export const Home = () => {
 							</h2>
 						</div>
 						<div className="">
-							<table className="table table-responsive-md table-hover">
+							<table className="table table-responsive-md table-hover mb-0">
 								<thead className="text-uppercase">
 									<tr className="table-active">
 										<th>Producto</th>
@@ -116,6 +118,7 @@ export const Home = () => {
 									})}
 								</tbody>
 							</table>
+							<BtnCreateAccount CoinSymbol="*" />
 						</div>
 					</div>
 				</div>
