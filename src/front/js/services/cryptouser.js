@@ -23,6 +23,25 @@ class CryptoUsers {
 			})
 			.catch(error => console.log("error:", error));
 	}
+
+	async ForgotPassword(email) {
+		let baseURL = process.env.BACKEND_URL + "/api/ForgotPassword/";
+		var requestOptions = {
+			method: "GET",
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL + email, requestOptions)
+			.then(res => {
+				if (res.status === 200) {
+					return res.json();
+				}
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
 }
 
 export default CryptoUsers;
