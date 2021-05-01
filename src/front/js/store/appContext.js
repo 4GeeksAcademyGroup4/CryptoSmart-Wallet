@@ -31,6 +31,7 @@ const injectContext = PassedComponent => {
 			const user = localStorage.getItem("user");
 			if (user != undefined) {
 				state.actions.LoginStore();
+				state.actions.getCoinList();
 			}
 			//state.actions.getTop5(); // <---- calling this function from the flux.js actions
 		}, []);
