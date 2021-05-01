@@ -16,11 +16,11 @@ export const Navbar = () => {
 				<Link to="/">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
-				<Link to="/" className="nav-item nav-link text-primary-color">
+				<Link to="/AboutUs" className="nav-item nav-link text-primary-color">
 					ACERCA DE
 				</Link>
-				<Link to="/" className="nav-item nav-link text-primary-color">
-					PRICING
+				<Link to="/DondeComprar" className="nav-item nav-link text-primary-color">
+					DONDE COMPRAR
 				</Link>
 				<div className="ml-auto">
 					<Link to="/Register">
