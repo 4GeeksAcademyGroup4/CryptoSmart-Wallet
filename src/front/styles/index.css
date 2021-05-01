@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 .text-font-base {
 	font-family: Montserrat, sans-serif!important;
 }
@@ -206,27 +207,112 @@
 	transform: rotateY(180deg);
 }
 
-#F1 {
-	width: 700px;
-	height: 510px;
-	background: #041427;
+#cardRegister {
+	position: relative;
+	width: 320px;
+	display: block;
+	margin: 40px auto;
+	text-align: center;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
-#F2 {
+#upper-side {
+	padding: 2em;
+	background-color: #8BC34A;
+	display: block;
+	color: #fff;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+}
+
+#checkmark {
+	font-weight: lighter;
+	fill: #fff;
+	margin: -3.5em auto auto 20px;
+}
+
+#status {
+	font-weight: lighter;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 1em;
+	margin-top: -.2em;
+	margin-bottom: 0;
+}
+
+#lower-side {
+	padding: 2em 2em 5em 2em;
+	background: #fff;
+	display: block;
+	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+}
+
+#message {
+	margin-top: -.5em;
+	color: #757575;
+	letter-spacing: 1px;
+}
+
+#contBtn {
+	position: relative;
+	top: 1.5em;
+	text-decoration: none;
+	background: #8bc34a;
+	color: #fff;
+	margin: auto;
+	padding: .8em 3em;
+	-webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+	-moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+	box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+	border-radius: 25px;
+	-webkit-transition: all .4s ease;
+	-moz-transition: all .4s ease;
+	-o-transition: all .4s ease;
+	transition: all .4s ease;
+}
+
+#contBtn:hover {
+	-webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+	-moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+	box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+	-webkit-transition: all .4s ease;
+	-moz-transition: all .4s ease;
+	-o-transition: all .4s ease;
+	transition: all .4s ease;
+}
+
+#R1 {
+	width: 700px;
+	height: 520px;
+	background: #041427;
+	margin-top: 100px;
+}
+
+#R2 {
 	width: 646px;
 	height: 420px;
 	background: #041427;
 	border-width: 10px;
 }
 
-#F3 {
+#R3 {
 	padding-top: 50px;
 	width: 597px;
 	height: 470px;
 	background: #041427;
 }
 
-#Fbutton {
+#R3login{
+
+    padding-top: 90px;
+	width: 597px;
+	height: 470px;
+	background: #041427;
+
+}
+
+#Rbutton {
 	background: #56CCF2;
 	border-radius: 20px;
 	font-family: Reem Kufi;

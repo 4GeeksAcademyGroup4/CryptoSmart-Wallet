@@ -95,6 +95,9 @@ class Account(db.Model):
     def Deposit(self, amount):
         self.balance = self.balance + amount
 
+    def SetBalance(self, amount):
+        self.balance = amount
+
     def serializebyUser(self):
         if self.coin:
             dict_coin = self.coin.serialize()
@@ -122,16 +125,18 @@ class CryptoTransaction(db.Model):
     toID = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     accountID = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     amount = db.Column(db.Float,unique=False, nullable=False)
+    reason = db.Column(db.String(500), unique=False, nullable=True)
 
     def __repr__(self):
         return '<CryptoTransaction %r>' % self.accountID
 
-    def __init__(self, date, fromID, toID, accountID, amount):
+    def __init__(self, date, fromID, toID, accountID, amount, reason):
         self.date = date,
         self.fromID = fromID,
         self.toID = toID,
         self.accountID = accountID,
         self.amount = amount
+        self.reason = reason
     
     def serialize(self):
         dic_from_user = self.user.serializeName()
@@ -140,5 +145,6 @@ class CryptoTransaction(db.Model):
             "date": self.date,
             "amount": self.amount,
             "from":dic_from_user,
-            "to":dic_to_user
+            "to":dic_to_user,
+            "reason": self.reason
         } 

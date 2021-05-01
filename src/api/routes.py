@@ -248,7 +248,7 @@ def CreateAccount():
     if 'date' not in data:
         return jsonify({
             "StatusID": 400,
-            "msg": "Necesita especificar la cantidad"}), 400
+            "msg": "Necesita especificar la fecha"}), 400
 
     current_user_id = get_jwt_identity()
 
@@ -264,7 +264,7 @@ def CreateAccount():
             userID=current_user_id, coinID=data["coinID"]).first()
 
         newtrans = CryptoTransaction(
-            data["date"], current_user_id, current_user_id, FromAccount.id, data["amount"])
+            data["date"], current_user_id, current_user_id, FromAccount.id, data["amount"],"Creación de la cuenta")
         db.session.add(newtrans)
         db.session.commit()
 
@@ -280,6 +280,27 @@ def CreateAccount():
 @jwt_required()
 def Deposit():
     data = request.get_json()
+
+    if data is None:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "La solicitud es Invalida"}), 400
+
+    if 'coinID' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el ID de la moneda"}), 400
+
+    if 'amount' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la cantidad"}), 400
+
+    if 'date' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la fecha"}), 400
+
     current_user_id = get_jwt_identity()
     FromAccount = Account.query.filter_by(
         userID=current_user_id, coinID=data["coinID"]).first()
@@ -295,29 +316,113 @@ def Deposit():
 
     # Deposit
     FromAccount.Deposit(data["amount"])
-    db.session.flush()
     db.session.commit()
 
     newtrans = CryptoTransaction(
-        data["date"], current_user_id, current_user_id, FromAccount.id, data["amount"])
+        data["date"], current_user_id, current_user_id, FromAccount.id, data["amount"],"Deposito Directo")
     db.session.add(newtrans)
     db.session.commit()
 
     return jsonify({"msg": "El Deposito se realizó satisfactoriamente"}), 200
 
 
+@api.route('/Adjust', methods=["PUT"])
+@jwt_required()
+def Adjust():
+    data = request.get_json()
+
+    if data is None:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "La solicitud es Invalida"}), 400
+
+    if 'accountID' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el ID de la moneda"}), 400
+
+    if 'newBalance' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el nuevo balance"}), 400
+
+    if 'reason' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la rason del ajuste"}), 400
+
+    if 'date' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la fecha"}), 400
+
+    current_user_id = get_jwt_identity()
+    FromAccount = Account.query.get(data["accountID"])
+    InitialBalance = FromAccount.balance
+
+    # Varification if Exist Account
+    if FromAccount is None:
+        return jsonify({
+                "StatusID": 404,
+                "msg": "La cuenta seleccionada no existe"}), 404
+
+    # Set Balance
+    FromAccount.SetBalance(data["newBalance"])
+    db.session.commit()
+
+    #Set Transactions
+    adjust = data["newBalance"] - InitialBalance
+    newtrans = CryptoTransaction(
+        data["date"], current_user_id, current_user_id, data["accountID"], adjust,data['reason'])
+    db.session.add(newtrans)
+    db.session.commit()
+
+    return jsonify({"msg": "El saldo se ajustó satisfactoriamente"}), 200
+
 @api.route('/Transfer', methods=["POST"])
 @jwt_required()
 def Transfer():
     data = request.get_json()
+
+    if data is None:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "La solicitud es Invalida"}), 400
+
+    if 'accountID' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el ID de la cuenta"}), 400
+
+    if 'amount' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el monto"}), 400            
+
+    if 'UserCode' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar el destinatario"}), 400
+
+    if 'reason' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar una descripción"}), 400
+
+    if 'date' not in data:
+        return jsonify({
+            "StatusID": 400,
+            "msg": "Necesita especificar la fecha"}), 400
+
     current_user_id = get_jwt_identity()
-    FromAccount = Account.query.filter_by(
-        userID=current_user_id, coinID=data["coinID"]).first()
+
+    FromAccount = Account.query.get(data["accountID"])
 
     if FromAccount is None:
         return jsonify({
             "StatusID": 400,
             "msg": "El usuario no posee una cuenta de dicha moneda"}), 400
+
     elif FromAccount.balance < data["amount"]:
         return jsonify({
             "StatusID": 400,
@@ -328,21 +433,21 @@ def Transfer():
 
         if UserFinal is None:
             return jsonify({
-                "StatusID": 400,
-                "msg": "El destinatario no existe"}), 400
+                "StatusID": 404,
+                "msg": "El destinatario no existe"}), 404
 
         else:
             ToAccount = Account.query.filter_by(
-                userID=UserFinal.id, coinID=data["coinID"]).first()
+                userID=UserFinal.id, coinID=FromAccount.coinID).first()
 
             if ToAccount is None:
                 newaccount = Account(
-                    UserFinal.id, data["coinID"], data["amount"])
+                    UserFinal.id, FromAccount.coinID, 0)
                 db.session.add(newaccount)
                 db.session.commit()
 
                 ToAccount = Account.query.filter_by(
-                    userID=UserFinal.id, coinID=data["coinID"]).first()
+                    userID=UserFinal.id, coinID=FromAccount.coinID).first()
 
             # Retiro
             FromAccount.Deposit((0-data["amount"]))
@@ -350,7 +455,7 @@ def Transfer():
             db.session.commit()
 
             newtrans = CryptoTransaction(
-                data["date"], current_user_id, UserFinal.id, FromAccount.id, (0 - data["amount"]))
+                data["date"], current_user_id, UserFinal.id, FromAccount.id, (0 - data["amount"]),data['reason'])
             db.session.add(newtrans)
             db.session.commit()
 
@@ -360,7 +465,7 @@ def Transfer():
             db.session.commit()
 
             newtrans = CryptoTransaction(
-                data["date"], current_user_id, UserFinal.id, ToAccount.id, data["amount"])
+                data["date"], current_user_id, UserFinal.id, ToAccount.id, data["amount"],data['reason'])
             db.session.add(newtrans)
             db.session.commit()
 
@@ -371,8 +476,7 @@ def Transfer():
 @jwt_required()
 def History(id):
     data = request.get_json()
-    Transactions = CryptoTransaction.query.filter(
-        CryptoTransaction.accountID == id)
+    Transactions = CryptoTransaction.query.filter_by(accountID=id)
     result = [item.serialize() for item in Transactions]
 
     return jsonify(result), 200
@@ -383,8 +487,7 @@ def History(id):
 def DeleteAccount(id):
 
     current_user_id = get_jwt_identity()
-    existAccount = Account.query.filter_by(
-        userID=current_user_id, coinID=id).first()
+    existAccount = Account.query.get(id)
 
     if existAccount is None:
         return jsonify({
@@ -392,7 +495,7 @@ def DeleteAccount(id):
             "msg": "La cuenta seleccionada no existe"}), 404
     else:
         Transactions = CryptoTransaction.query.filter(
-            CryptoTransaction.accountID == existAccount.id)
+            CryptoTransaction.accountID == id)
         for item in Transactions:
             db.session.delete(item)
             db.session.commit()

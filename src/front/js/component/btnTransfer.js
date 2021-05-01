@@ -14,27 +14,33 @@ export const BtnTransfer = props => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors }
 	} = useForm();
 
 	const onSubmit = data => {
+		// console.log(data);
+		// console.log(props);
 		let model = {
-			coinID: props.Account.coinID,
+			accountID: props.Account.accountID,
 			amount: parseFloat(data.amount),
-			UserCode: data.UserCode
+			UserCode: data.UserCode,
+			reason: data.reason ? data.reason : "Transferencia"
 		};
 		console.log(model);
 		const response = CryptoAccountsSVC.Transfer(model).then(res => {
-			if (res.StatusID === 200) {
-				setMsg(res.msg);
-				//setIsModalVisible(false);
-			} else {
+			console.log(res);
+			if (res.StatusID) {
 				message.error({
 					content: res.msg,
 					style: {
 						marginTop: "30vh"
 					}
 				});
+			} else {
+				setMsg(res.msg);
+				reset();
+				//setIsModalVisible(false);
 			}
 		});
 	};
@@ -42,6 +48,7 @@ export const BtnTransfer = props => {
 	const cleanFields = () => {
 		setIsModalVisible(false);
 		//setAmount("");
+		reset();
 		setMsg("");
 	};
 	const showModal = () => {
@@ -147,13 +154,26 @@ export const BtnTransfer = props => {
 								className="form-control"
 							/>
 						</div>
-						<div className="form-group mb-1">
+						<div className="form-group mb-3">
 							{errors.UserCode && (
 								<label className="col text-danger p-0">
 									<i className="fas fa-times-circle" />
 									El UserCode debe tener al menos 3 caracteres
 								</label>
 							)}
+						</div>
+						<div className="form-group input-group m-0">
+							<div className="input-group-prepend">
+								<span className="input-group-text">
+									<i className="far fa-question-circle" />
+								</span>
+							</div>
+							<input
+								defaultValue=""
+								placeholder="Detalle"
+								{...register("reason")}
+								className="form-control"
+							/>
 						</div>
 						<div className="form-group text-center mt-3 mb-0">
 							<button className="btn btn-outline-primary text-font-base btn-block" type="submit">
