@@ -27,7 +27,7 @@ export const BtnTransfer = props => {
 			UserCode: data.UserCode,
 			reason: data.reason ? data.reason : "Transferencia"
 		};
-		console.log(model);
+		//console.log(model);
 		const response = CryptoAccountsSVC.Transfer(model).then(res => {
 			console.log(res);
 			if (res.StatusID) {

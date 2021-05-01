@@ -33,8 +33,11 @@ export const Home = () => {
 			<Menu.Item key="3">
 				<a>Ver Transacciones</a>
 			</Menu.Item>
-			<Menu.Divider />
 			<Menu.Item key="4">
+				<a>Ajustar Balance</a>
+			</Menu.Item>
+			<Menu.Divider />
+			<Menu.Item key="5">
 				<a className="text-danger" onClick={() => DeleteAccount(account.accountID)}>
 					Eliminar Cuenta <i className="far fa-times-circle align-middle" />
 				</a>

@@ -12,7 +12,6 @@ export const BtnCreateAccount = props => {
 	const [SuccessMsg, setMsg] = useState("");
 
 	const CryptoAccountsSVC = new CryptoAccounts();
-	const CryptoCoinSVC = new CryptoCoins();
 
 	const {
 		register,
@@ -22,7 +21,26 @@ export const BtnCreateAccount = props => {
 	} = useForm();
 
 	const onSubmit = data => {
-		console.log(data);
+		//console.log(data);
+		let model = {
+			coinID: data.coinID,
+			amount: parseFloat(data.amount)
+		};
+		const response = CryptoAccountsSVC.CreateACcount(model).then(res => {
+			//console.log(res);
+			if (res.StatusID) {
+				message.error({
+					content: res.msg,
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			} else {
+				setMsg("Cuenta Creada Satisfactoriamente!!!");
+				reset();
+				//setIsModalVisible(false);
+			}
+		});
 	};
 
 	const cleanFields = () => {
@@ -48,7 +66,7 @@ export const BtnCreateAccount = props => {
 			setTimeout(() => {
 				clearInterval(timer);
 				actions.UpdateAccounts();
-				cleanFields();
+				window.location.reload();
 			}, secondsToGo * 1000);
 
 			return (
@@ -67,9 +85,15 @@ export const BtnCreateAccount = props => {
 								</span>
 							</div>
 							<select {...register("coinID")} className="custom-select">
-								<option value="female">female</option>
-								<option value="male">male</option>
-								<option value="other">other</option>
+								{store.CryptoCoinsList.map((item, i) => {
+									if (item.symbol === props.CoinSymbol || props.CoinSymbol === "*") {
+										return (
+											<option key={i} value={item.coinID}>
+												{item.name + " (" + item.symbol + ")"}
+											</option>
+										);
+									}
+								})}
 							</select>
 						</div>
 						<div className="form-group input-group m-0">
@@ -136,6 +160,6 @@ export const BtnCreateAccount = props => {
 };
 
 BtnCreateAccount.propTypes = {
-	CoinID: PropType.number
+	CoinSymbol: PropType.string
 	// 2) add here the new properties into the proptypes object
 };

@@ -3,10 +3,6 @@ class CryptoCoins {
 	async GetList() {
 		let baseURL = process.env.BACKEND_URL + "/api/CryptoCoins";
 		var myHeaders = new Headers();
-		var AuthUser = JSON.parse(localStorage.getItem("user"));
-		let AuthHeader = "Bearer " + AuthUser.token;
-
-		myHeaders.append("Authorization", AuthHeader);
 
 		var requestOptions = {
 			method: "GET",
