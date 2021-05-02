@@ -1,15 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, setState, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import LOGO from "../../img/LOGO.png";
+import USERIMG from "../../img/userimg.png";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
+	const { isOpen, qfalse } = useState(false);
+	const Nombre = "Ale";
 
 	const Logout = () => {
 		localStorage.removeItem("user");
 		actions.LogoutStore();
 	};
+
 	if (!store.isLogged) {
 		return (
 			<nav className="navbar mb-3">
@@ -38,7 +42,13 @@ export const Navbar = () => {
 				<Link to="/Home">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
+				<Link to="/DondeComprar" className="nav-item nav-link text-primary-color">
+					DONDE COMPRAR
+				</Link>
+
 				<div className="ml-auto">
+					<img className="userimg img-fluid mx-5" src={USERIMG} style={{ height: 70 }} />
+
 					<button className="btn btn-primary btn-primary-color" onClick={() => Logout()}>
 						Salir
 					</button>
