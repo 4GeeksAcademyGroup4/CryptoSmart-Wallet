@@ -1,4 +1,4 @@
-import React, { useContext, setState, useState } from "react";
+import React, { useContext, setState, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import LOGO from "../../img/LOGO.png";
@@ -8,11 +8,16 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const { isOpen, qfalse } = useState(false);
 	const Nombre = "Ale";
-
+	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const Logout = () => {
 		localStorage.removeItem("user");
 		actions.LogoutStore();
 	};
+
+	useEffect(() => {
+		console.log(userDetails);
+		console.log(localStorage);
+	}, []);
 
 	if (!store.isLogged) {
 		return (
@@ -47,11 +52,25 @@ export const Navbar = () => {
 				</Link>
 
 				<div className="ml-auto">
-					<img className="userimg img-fluid mx-5" src={USERIMG} style={{ height: 70 }} />
-
-					<button className="btn btn-primary btn-primary-color" onClick={() => Logout()}>
-						Salir
-					</button>
+					<div id="flip-container-usr mb-5">
+						<div className="row">
+							<div className="flip-box-usr p-1 text-light">
+								<div className="flip-box-inner">
+									<div className="flip-box-front">
+										<img className="userimg img-fluid" src={USERIMG} style={{ height: 70 }} />
+									</div>
+									<div className="flip-box-back text-light">
+										<p className="text-light">Alejandro Guerrero</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="row">
+							<button className="btn btn-primary btn-primary-color" onClick={() => Logout()}>
+								Salir
+							</button>
+						</div>
+					</div>
 				</div>
 			</nav>
 		);

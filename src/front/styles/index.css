@@ -155,6 +155,20 @@
 	/* Remove this if you don't want the 3D effect */
 }
 
+.flip-box-usr {
+	background-color: transparent;
+	border-radius: 25px;
+	width: 100px;
+	height: 100px;
+    perspective: 1000px;
+    display: inline-block;
+	/* Remove this if you don't want the 3D effect */
+}
+
+.flip-container-usr{
+    display: inline-block;
+}
+
 .flip-box-ab {
 	background-color: transparent;
 	border-radius: 25px;
@@ -186,6 +200,10 @@
 
 
 .flip-box-ab:hover .flip-box-inner {
+	transform: rotateY(180deg);
+}
+
+.flip-box-usr:hover .flip-box-inner {
 	transform: rotateY(180deg);
 }
 
