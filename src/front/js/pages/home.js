@@ -1,16 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Redirect, Link } from "react-router-dom";
-import { Tooltip, Menu, Dropdown } from "antd";
+import { Tooltip, Menu, Dropdown, Popconfirm, message } from "antd";
 
 import { CoinHome } from "../component/coinHome";
 import { BtnDeposit } from "../component/btnDeposit";
 import { BtnTransfer } from "../component/btnTransfer";
 import { BtnCreateAccount } from "../component/btnCreateAccount";
 import { BtnAdjust } from "../component/btnAdjust";
+import { BalanceUSD } from "../component/balanceUSD";
+
+import CryptoAccounts from "../services/cryptoaccount";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const CryptoAccountsSVC = new CryptoAccounts();
 	const user = localStorage.getItem("user");
 
 	useEffect(() => {
@@ -18,11 +22,27 @@ export const Home = () => {
 		actions.UpdateAccounts();
 	}, []);
 
-	function DeleteAccount(id) {
-		var x = confirm("Esta seguro que quiere eliminar esta cuenta???");
-		if (x) {
-			console.log(id);
-		}
+	function confirm(id) {
+		console.log(id);
+		const response = CryptoAccountsSVC.DeleteAccount(id).then(res => {
+			if (res.StatusID) {
+				message.error({
+					content: res.msg,
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			} else {
+				message.success({
+					content: "Cuenta borrada satisfactoriamente!!!",
+					style: {
+						marginTop: "30vh"
+					}
+				});
+				actions.UpdateAccounts();
+				//setIsModalVisible(false);
+			}
+		});
 	}
 	const menu = account => (
 		<Menu>
@@ -40,9 +60,15 @@ export const Home = () => {
 			</Menu.Item>
 			<Menu.Divider />
 			<Menu.Item key="5">
-				<a className="text-danger" onClick={() => DeleteAccount(account.accountID)}>
-					Eliminar Cuenta <i className="far fa-times-circle align-middle" />
-				</a>
+				<Popconfirm
+					title="Esta seguro que quiere eliminar esta cuenta?"
+					onConfirm={() => confirm(account.accountID)}
+					okText="Yes"
+					cancelText="No">
+					<a className="text-danger">
+						Eliminar Cuenta <i className="far fa-times-circle align-middle" />
+					</a>
+				</Popconfirm>
 			</Menu.Item>
 		</Menu>
 	);
@@ -74,7 +100,8 @@ export const Home = () => {
 								<thead className="text-uppercase">
 									<tr className="table-active">
 										<th>Producto</th>
-										<th>Saldo</th>
+										<th className="text-center">Saldo</th>
+										<th className="text-center">Saldo USD</th>
 										<th className="text-center">Ver</th>
 										<th className="text-center">Transferir</th>
 										<th className="text-center" />
@@ -82,13 +109,17 @@ export const Home = () => {
 								</thead>
 								<tbody>
 									{store.UserAccounts.map((item, i) => {
+										console.log(item);
 										return (
 											<tr key={i}>
 												<td>
 													{item.coin.name} ({item.coin.symbol})
 												</td>
-												<td>
+												<td className="text-center">
 													{item.balance} {item.coin.symbol}
+												</td>
+												<td className="text-center">
+													<BalanceUSD Account={item} />
 												</td>
 												<td className="text-center">
 													<Tooltip placement="top" title="Ver Historial" color="geekblue">

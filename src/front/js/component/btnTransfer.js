@@ -29,7 +29,7 @@ export const BtnTransfer = props => {
 		};
 		//console.log(model);
 		const response = CryptoAccountsSVC.Transfer(model).then(res => {
-			console.log(res);
+			//console.log(res);
 			if (res.StatusID) {
 				message.error({
 					content: res.msg,
