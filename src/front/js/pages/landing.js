@@ -14,6 +14,11 @@ export const Landing = () => {
 		iconomi_tickers: ["BLX", "CAR"],
 		last_days: 90
 	});
+
+	useEffect(() => {
+		actions.getTop5();
+	}, []);
+
 	return (
 		<div className="text-center mt-5">
 			<div className="container-fluid">
@@ -24,31 +29,16 @@ export const Landing = () => {
 					<Converter />
 				</div>
 				<div id="flip-container mb-5">
+					<h1>El top 9 de cryptomonedas</h1>
 					<div className="row">
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
+						<div className="col py-2">
+							{store.Top5Coins.map((item, i) => {
+								return <FlipCard CoinSymbol={item.symbol} key={i} />;
+							})}
 						</div>
 					</div>
 				</div>
-				<div id="flip-container mb-5">
-					<div className="row">
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-					</div>
-				</div>
+				<h1>Graficos a tiempo real, con cambios en el tiempo</h1>
 				<div className="py-5" id="mychart" />
 				<div className="py-5">
 					<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
