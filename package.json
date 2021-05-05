@@ -81,6 +81,7 @@
 		"moment": "^2.29.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-animate-on-scroll": "^2.1.5",
 		"react-bootstrap": "^1.5.2",
 		"react-dom": "^16.8.4",
 		"react-hook-form": "^7.3.5",
