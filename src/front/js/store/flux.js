@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			isLogged: false,
 			Top5Coins: [],
+			Top12Coins: [],
 			UserAccounts: [],
 			CryptoCoinsList: []
 		},
@@ -38,6 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ Top5Coins: items });
 				});
 			},
+
 			getCoinList: () => {
 				CryptoCoinSVC.GetList().then(items => {
 					setStore({ CryptoCoinsList: items });

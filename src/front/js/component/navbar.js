@@ -7,17 +7,11 @@ import USERIMG from "../../img/userimg.png";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const { isOpen, qfalse } = useState(false);
-	const Nombre = "Ale";
-	let userDetails = JSON.parse(localStorage.getItem("user"));
+	const currentuser = { firstname: "Alejandro", lastName: "Guerrero" };
 	const Logout = () => {
 		localStorage.removeItem("user");
 		actions.LogoutStore();
 	};
-
-	useEffect(() => {
-		console.log(userDetails);
-		console.log(localStorage);
-	}, []);
 
 	if (!store.isLogged) {
 		return (
@@ -60,7 +54,9 @@ export const Navbar = () => {
 										<img className="userimg img-fluid" src={USERIMG} style={{ height: 70 }} />
 									</div>
 									<div className="flip-box-back text-light">
-										<p className="text-light">Alejandro Guerrero</p>
+										<p className="text-light mt-3">
+											{currentuser.firstname + " " + currentuser.lastName}
+										</p>
 									</div>
 								</div>
 							</div>

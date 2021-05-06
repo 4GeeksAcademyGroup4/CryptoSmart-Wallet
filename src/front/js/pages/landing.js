@@ -30,7 +30,7 @@ export const Landing = () => {
 				</ScrollAnimation>
 				<Corousel />
 				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
-					<div className="pt-2 pb-5">
+					<div className="pt-2 pb-5 mt-5">
 						<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
 					</div>
 				</ScrollAnimation>

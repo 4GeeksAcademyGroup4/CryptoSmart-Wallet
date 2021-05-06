@@ -26,10 +26,10 @@ export const FlipCard = props => {
 				<div className="flip-box-front">
 					<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
 				</div>
-				<div className="flip-box-back mx-2 text-light">
+				<div className="flip-box-back mx-2 mt-2 text-light">
 					<h3 className="text-light">{Coin.name}</h3>
 					<p>{props.CoinSymbol}</p>
-					<h3 className="text-light">$50000</h3>
+					<h3 className="text-light" />
 				</div>
 			</div>
 		</div>
