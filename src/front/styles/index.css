@@ -318,7 +318,7 @@
 }
 
 #Rbutton {
-	background: #56CCF2;
+	background:rgb(6, 135, 179);
 	border-radius: 20px;
 	font-family: Reem Kufi;
 	font-style: normal;
@@ -355,7 +355,7 @@
     border-radius: 1%;
 }
 #Fbutton {
-	background: #56CCF2;
+	background: rgb(6, 135, 179);
 	border-radius: 20px;
 	font-family: Reem Kufi;
 	font-style: normal;
