@@ -18,8 +18,8 @@
 	background-color: #041427;
 	color: white;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	font-weight: bold;
-	margin-top: 5px;
+	font-weight: 900;
+	margin-top: 0px;
 }
 
 .footer {
@@ -286,21 +286,25 @@
 	width: 700px;
 	height: 520px;
 	background: #041427;
-	margin-top: 100px;
+    margin-top: 100px;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
 }
 
 #R2 {
 	width: 646px;
 	height: 420px;
 	background: #041427;
-	border-width: 10px;
+    border-width: 10px;
+    border-radius: 2%;
 }
 
 #R3 {
 	padding-top: 50px;
 	width: 597px;
 	height: 470px;
-	background: #041427;
+    background: #041427;
+    border-radius: 1%;
 }
 
 #R3login{
@@ -308,7 +312,8 @@
     padding-top: 90px;
 	width: 597px;
 	height: 470px;
-	background: #041427;
+    background: #041427;
+    border-radius: 1%;
 
 }
 
@@ -323,4 +328,41 @@
 	color: #F2F2F2;
 	border: 1px solid #000000;
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#F1 {
+	width: 700px;
+	height: 520px;
+	background: #041427;
+    margin-top: 100px;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+}
+
+#F2 {
+	width: 646px;
+	height: 420px;
+	background: #041427;
+    border-width: 10px;
+    border-radius: 2%;
+}
+
+#F3 {
+	padding-top: 50px;
+	width: 597px;
+	height: 470px;
+    background: #041427;
+    border-radius: 1%;
+}
+#Fbutton {
+	background: #56CCF2;
+	border-radius: 20px;
+	font-family: Reem Kufi;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 15px;
+	line-height: 30px;
+	color: #F2F2F2;
+	border: 1px solid #000000;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
