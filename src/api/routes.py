@@ -236,7 +236,7 @@ def MainBalance(id):
 
 @api.route('/UserInfo', methods=["GET"])
 @jwt_required()
-def MainBalance():
+def UserInfo():
     # Access the identity of the current user with get_jwt_identity
 
     current_user_id = get_jwt_identity()
