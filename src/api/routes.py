@@ -483,7 +483,6 @@ def Transfer():
 @api.route('/History/<int:id>', methods=["POST"])
 @jwt_required()
 def History(id):
-    data = request.get_json()
     Transactions = CryptoTransaction.query.filter_by(accountID=id)
     result = [item.serialize() for item in Transactions]
 
