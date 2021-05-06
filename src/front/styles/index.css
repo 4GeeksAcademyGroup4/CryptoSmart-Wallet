@@ -40,12 +40,12 @@
 }
 
 .text-primary-color {
-	color: #4efffd;
+	color: #56CCF2;
 }
 
 .btn-primary-color {
-	border-color: #4efffd;
-	color: #4efffd;
+	border-color: #56CCF2;
+	color: #56CCF2;
 	background-color: transparent;
 }
 
@@ -140,7 +140,7 @@
 /* Style the back side */
 
 .flip-box-back-homepage {
-	background-color: #4efffd;
+	background-color: #56CCF2;
 	color: white;
 	transform: rotateY(180deg);
 }
@@ -366,3 +366,5 @@
 	border: 1px solid #000000;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+
