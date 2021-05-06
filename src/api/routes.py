@@ -234,6 +234,16 @@ def MainBalance(id):
 
     return jsonify(result), 200
 
+@api.route('/UserInfo', methods=["GET"])
+@jwt_required()
+def MainBalance():
+    # Access the identity of the current user with get_jwt_identity
+
+    current_user_id = get_jwt_identity()
+
+    user = CryptoUser.query.get(current_user_id)
+
+    return jsonify(user.serializeName()), 200
 
 @api.route('/Account', methods=["POST"])
 @jwt_required()
