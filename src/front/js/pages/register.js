@@ -146,6 +146,7 @@ export const Register = () => {
 										<input
 											type="password"
 											id="password"
+											pattern=".{8,}"
 											value={inputPassword}
 											onChange={e => setPasswordValue(e.target.value)}
 											placeholder="Contraseña"

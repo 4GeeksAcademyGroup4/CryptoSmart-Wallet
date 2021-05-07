@@ -28,7 +28,9 @@ export const Landing = () => {
 						Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia
 					</h1>
 				</ScrollAnimation>
-				<Corousel />
+				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
+					<Corousel />
+				</ScrollAnimation>
 				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
 					<div className="pt-2 pb-5 mt-5">
 						<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
@@ -41,13 +43,15 @@ export const Landing = () => {
 					<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
 						<h1>El top 9 de cryptomonedas</h1>
 					</ScrollAnimation>
-					<div className="row">
-						<div className="col py-2">
-							{store.Top5Coins.map((item, i) => {
-								return <FlipCard CoinSymbol={item.symbol} key={i} />;
-							})}
+					<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
+						<div className="row">
+							<div className="col py-2">
+								{store.Top5Coins.map((item, i) => {
+									return <FlipCard CoinSymbol={item.symbol} key={i} />;
+								})}
+							</div>
 						</div>
-					</div>
+					</ScrollAnimation>
 				</div>
 				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
 					<h1>Graficos a tiempo real, con cambios en el tiempo</h1>
