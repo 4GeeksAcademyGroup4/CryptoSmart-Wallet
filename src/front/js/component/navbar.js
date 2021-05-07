@@ -30,7 +30,9 @@ export const Navbar = () => {
 						<span className="mx-3 text-primary-color">Registrarse</span>
 					</Link>
 					<Link to="/Login">
-						<button className="btn btn-primary btn-primary-color">Accessar</button>
+						<button id="Jbutton" className="btn btn-primary btn-primary-color">
+							Accessar
+						</button>
 					</Link>
 				</div>
 			</nav>

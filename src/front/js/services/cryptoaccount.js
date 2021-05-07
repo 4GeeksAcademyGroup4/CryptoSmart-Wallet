@@ -44,9 +44,6 @@ class CryptoAccounts {
 			coinID: model.coinID,
 			amount: model.amount
 		});
-		//console.log(model);
-		//console.log(raw);
-
 		var requestOptions = {
 			method: "PUT",
 			headers: myHeaders,
@@ -82,9 +79,6 @@ class CryptoAccounts {
 			UserCode: model.UserCode,
 			reason: model.reason
 		});
-		//console.log(model);
-		//console.log(raw);
-
 		var requestOptions = {
 			method: "POST",
 			headers: myHeaders,
@@ -123,6 +117,30 @@ class CryptoAccounts {
 			method: "POST",
 			headers: myHeaders,
 			body: raw,
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL, requestOptions)
+			.then(res => {
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
+
+	async History(id) {
+		let baseURL = process.env.BACKEND_URL + "/api/History/" + id;
+		var myHeaders = new Headers();
+		var AuthUser = JSON.parse(localStorage.getItem("user"));
+		let AuthHeader = "Bearer " + AuthUser.token;
+
+		myHeaders.append("Authorization", AuthHeader);
+
+		var requestOptions = {
+			method: "POST",
+			headers: myHeaders,
 			redirect: "follow"
 		};
 
