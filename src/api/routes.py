@@ -91,7 +91,12 @@ def Login():
     # Create Token
     delta = relativedelta(minutes=30)
     access_token = create_access_token(identity=user.id, expires_delta=delta)
-    return jsonify({"token": access_token, "user_id": user.id}), 200
+    return jsonify({"token": access_token, 
+                    "user_id": user.id,  
+                    "usercode":user.userCode,
+                    "firstname": user.firstname,
+                    "lastName": user.lastName}), 200
+    
 
 
 @api.route('/Register', methods=["POST"])
@@ -234,6 +239,16 @@ def MainBalance(id):
 
     return jsonify(result), 200
 
+@api.route('/UserInfo', methods=["GET"])
+@jwt_required()
+def UserInfo():
+    # Access the identity of the current user with get_jwt_identity
+
+    current_user_id = get_jwt_identity()
+
+    user = CryptoUser.query.get(current_user_id)
+
+    return jsonify(user.serializeName()), 200
 
 @api.route('/Account', methods=["POST"])
 @jwt_required()
@@ -483,7 +498,6 @@ def Transfer():
 @api.route('/History/<int:id>', methods=["POST"])
 @jwt_required()
 def History(id):
-    data = request.get_json()
     Transactions = CryptoTransaction.query.filter_by(accountID=id)
     result = [item.serialize() for item in Transactions]
 

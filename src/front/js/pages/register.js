@@ -57,7 +57,6 @@ export const Register = () => {
 
 		event.preventDefault();
 	};
-
 	if (user) {
 		return (
 			<div id="cardRegister" className="animated fadeIn">

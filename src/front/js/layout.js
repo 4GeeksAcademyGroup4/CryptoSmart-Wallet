@@ -9,7 +9,7 @@ import { Register } from "./pages/register";
 import { ForgotPassword } from "./pages/forgotpassword";
 import { About } from "./pages/aboutus";
 import injectContext from "./store/appContext";
-
+import { History } from "./pages/history";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -27,6 +27,9 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/">
 							<Landing />
+						</Route>
+						<Route exact path="/History/:accountID">
+							<History />
 						</Route>
 						<Route exact path="/Login">
 							<Login />
