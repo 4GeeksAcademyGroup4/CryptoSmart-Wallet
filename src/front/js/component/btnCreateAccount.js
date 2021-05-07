@@ -86,6 +86,7 @@ export const BtnCreateAccount = props => {
 							</div>
 							<select {...register("coinID")} className="custom-select">
 								{store.CryptoCoinsList.map((item, i) => {
+									//console.log(item, props.CoinSymbol);
 									if (item.symbol === props.CoinSymbol || props.CoinSymbol === "*") {
 										return (
 											<option key={i} value={item.coinID}>

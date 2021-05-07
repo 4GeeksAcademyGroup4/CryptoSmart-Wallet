@@ -1,5 +1,4 @@
 import * as moment from "moment";
-import { message } from "antd";
 
 class CryptoAccounts {
 	constructor() {}
@@ -44,6 +43,9 @@ class CryptoAccounts {
 			coinID: model.coinID,
 			amount: model.amount
 		});
+		//console.log(model);
+		//console.log(raw);
+
 		var requestOptions = {
 			method: "PUT",
 			headers: myHeaders,
@@ -79,6 +81,9 @@ class CryptoAccounts {
 			UserCode: model.UserCode,
 			reason: model.reason
 		});
+		//console.log(model);
+		//console.log(raw);
+
 		var requestOptions = {
 			method: "POST",
 			headers: myHeaders,
@@ -130,6 +135,65 @@ class CryptoAccounts {
 			.catch(error => console.log("error:", error));
 	}
 
+	async AdjustBalance(model) {
+		let baseURL = process.env.BACKEND_URL + "/api/Adjust";
+		var myHeaders = new Headers();
+		var AuthUser = JSON.parse(localStorage.getItem("user"));
+		let AuthHeader = "Bearer " + AuthUser.token;
+
+		myHeaders.append("Authorization", AuthHeader);
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify({
+			date: moment().format(),
+			accountID: model.accountID,
+			newBalance: model.newBalance,
+			reason: model.reason
+		});
+		//console.log(model);
+		//console.log(raw);
+
+		var requestOptions = {
+			method: "PUT",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL, requestOptions)
+			.then(res => {
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
+
+	async DeleteAccount(id) {
+		let baseURL = process.env.BACKEND_URL + "/api/Account/" + id;
+		var myHeaders = new Headers();
+		var AuthUser = JSON.parse(localStorage.getItem("user"));
+		let AuthHeader = "Bearer " + AuthUser.token;
+
+		myHeaders.append("Authorization", AuthHeader);
+
+		var requestOptions = {
+			method: "DELETE",
+			headers: myHeaders,
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL, requestOptions)
+			.then(res => {
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
+	
 	async History(id) {
 		let baseURL = process.env.BACKEND_URL + "/api/History/" + id;
 		var myHeaders = new Headers();

@@ -5,7 +5,7 @@ import PropType from "prop-types";
 import { Modal, Tooltip, message } from "antd";
 import CryptoAccounts from "../services/cryptoaccount";
 
-export const BtnTransfer = props => {
+export const BtnAdjust = props => {
 	const { actions } = useContext(Context);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const CryptoAccountsSVC = new CryptoAccounts();
@@ -23,13 +23,12 @@ export const BtnTransfer = props => {
 		// console.log(props);
 		let model = {
 			accountID: props.Account.accountID,
-			amount: parseFloat(data.amount),
-			UserCode: data.UserCode,
+			newBalance: parseFloat(data.newBalance),
 			reason: data.reason ? data.reason : "Transferencia"
 		};
 		//console.log(model);
-		const response = CryptoAccountsSVC.Transfer(model).then(res => {
-			//console.log(res);
+		const response = CryptoAccountsSVC.AdjustBalance(model).then(res => {
+			console.log(res);
 			if (res.StatusID) {
 				message.error({
 					content: res.msg,
@@ -58,18 +57,6 @@ export const BtnTransfer = props => {
 	const handleCancel = event => {
 		cleanFields();
 		event.preventDefault();
-	};
-
-	const TypeLinkBtn = () => {
-		if (props.TypeLink === "btn") {
-			return (
-				<Tooltip placement="top" title="Transferir" color="red">
-					<i className="link-a fas fa-angle-double-right fa-2x" onClick={showModal} />
-				</Tooltip>
-			);
-		} else {
-			return <a onClick={showModal}>Transferir</a>;
-		}
 	};
 
 	const ModalContent = () => {
@@ -112,12 +99,11 @@ export const BtnTransfer = props => {
 								<span className="input-group-text">0.00</span>
 							</div>
 							<input
-								defaultValue=""
+								defaultValue={props.Account.balance}
 								type="number"
-								{...register("amount", {
+								{...register("newBalance", {
 									validate: {
-										positiveNumber: value => parseFloat(value) > 0,
-										maxAvailable: value => parseFloat(value) <= props.Account.balance
+										positiveNumber: value => parseFloat(value) > 0
 									}
 								})}
 								className="form-control"
@@ -131,36 +117,6 @@ export const BtnTransfer = props => {
 										El monto debe ser mayor a 0
 									</label>
 								)}
-							{errors.amount &&
-								errors.amount.type === "maxAvailable" && (
-									<label className="text-danger p-0">
-										<i className="fas fa-times-circle" />
-										El monto excede su disponible
-									</label>
-								)}
-						</div>
-						<div className="form-group input-group m-0">
-							<div className="input-group-prepend">
-								<span className="input-group-text">
-									<i className="fas fa-user" />
-								</span>
-							</div>
-							<input
-								defaultValue=""
-								placeholder="UserCode"
-								{...register("UserCode", {
-									validate: value => value.length >= 3
-								})}
-								className="form-control"
-							/>
-						</div>
-						<div className="form-group mb-3">
-							{errors.UserCode && (
-								<label className="col text-danger p-0">
-									<i className="fas fa-times-circle" />
-									El UserCode debe tener al menos 3 caracteres
-								</label>
-							)}
 						</div>
 						<div className="form-group input-group m-0">
 							<div className="input-group-prepend">
@@ -177,7 +133,7 @@ export const BtnTransfer = props => {
 						</div>
 						<div className="form-group text-center mt-3 mb-0">
 							<button className="btn btn-outline-primary text-font-base btn-block" type="submit">
-								Transferir
+								Ajustar
 							</button>
 						</div>
 
@@ -194,11 +150,11 @@ export const BtnTransfer = props => {
 
 	return (
 		<div>
-			<TypeLinkBtn />
+			<a onClick={showModal}>Ajustar Balance</a>
 			<Modal
 				title={[
 					<h3 key="title" className="text-center text-primary-color text-font-base m-0">
-						Transferencia
+						Ajustar Balance
 					</h3>
 				]}
 				visible={isModalVisible}
@@ -211,8 +167,7 @@ export const BtnTransfer = props => {
 	);
 };
 
-BtnTransfer.propTypes = {
-	Account: PropType.object,
-	TypeLink: PropType.string
+BtnAdjust.propTypes = {
+	Account: PropType.object
 	// 2) add here the new properties into the proptypes object
 };
