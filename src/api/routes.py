@@ -91,7 +91,12 @@ def Login():
     # Create Token
     delta = relativedelta(minutes=30)
     access_token = create_access_token(identity=user.id, expires_delta=delta)
-    return jsonify({"token": access_token, "user_id": user.id}), 200
+    return jsonify({"token": access_token, 
+                    "user_id": user.id,  
+                    "usercode":user.userCode,
+                    "firstname": user.firstname,
+                    "lastName": user.lastName}), 200
+    
 
 
 @api.route('/Register', methods=["POST"])
