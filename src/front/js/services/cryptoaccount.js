@@ -44,9 +44,6 @@ class CryptoAccounts {
 			coinID: model.coinID,
 			amount: model.amount
 		});
-		//console.log(model);
-		//console.log(raw);
-
 		var requestOptions = {
 			method: "PUT",
 			headers: myHeaders,
@@ -82,9 +79,6 @@ class CryptoAccounts {
 			UserCode: model.UserCode,
 			reason: model.reason
 		});
-		//console.log(model);
-		//console.log(raw);
-
 		var requestOptions = {
 			method: "POST",
 			headers: myHeaders,
