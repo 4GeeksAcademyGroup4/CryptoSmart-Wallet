@@ -47,7 +47,7 @@ export const CoinHome = props => {
 							{/* <p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
 							<p className="text-font-base m-0 text-black-50 font-weight-bold">{props.CoinSymbol}</p> */}
 							<p className="text-font-base m-0 text-dark font-weight-bold fa-15x">{props.CoinSymbol}</p>
-							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.name}</p>
+							<p className="text-font-base m-0 text-black-50 font-weight-bold">{Coin.Detail}</p>
 							<BtnDeposit Account={ExistingAccount} TypeLink="btn" />
 						</div>
 					</div>

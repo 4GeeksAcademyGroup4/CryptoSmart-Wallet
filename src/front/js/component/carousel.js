@@ -5,8 +5,8 @@ import banner2 from "../../img/Banner3.jpg";
 
 export const Corousel = () => (
 	<div>
-		<div className="bd-example">
-			<div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
+		<div className="bd-example carrousel mt-5">
+			<div id="carouselExampleCaptions" className="carousel slide border" data-ride="carousel">
 				<ol className="carousel-indicators">
 					<li data-target="#carouselExampleCaptions" data-slide-to="0" className="active" />
 					<li data-target="#carouselExampleCaptions" data-slide-to="1" />
@@ -31,7 +31,7 @@ export const Corousel = () => (
 						</div>
 					</div>
 					<div className="carousel-item">
-						<img src={banner2} className="d-block w-100" alt="..." />
+						<img src={banner2} className="d-block w-100 border" alt="..." />
 						<div className="carousel-caption d-none d-md-block">
 							<h5 className="bx-shadow">4GEEKS ACADEMY</h5>
 							<p>GRUPO 4, aleguerrerom, hirolabpro jhomstone, Mivargasg </p>

@@ -12,7 +12,7 @@ class CoinMarketCap {
 		};
 
 		return await fetch(
-			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6",
+			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=14",
 			requestOptions
 		)
 			.then(response => {
@@ -48,5 +48,4 @@ class CoinMarketCap {
 			.catch(error => console.log("error", error));
 	}
 }
-
 export default CoinMarketCap;

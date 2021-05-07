@@ -5,6 +5,7 @@ import * as CryptoCharts from "cryptocharts";
 import { Converter } from "../component/converter";
 import { FlipCard } from "../component/flipcard";
 import { Corousel } from "../component/carousel";
+import ScrollAnimation from "react-animate-on-scroll";
 
 export const Landing = () => {
 	const { store, actions } = useContext(Context);
@@ -14,41 +15,47 @@ export const Landing = () => {
 		iconomi_tickers: ["BLX", "CAR"],
 		last_days: 90
 	});
+
+	useEffect(() => {
+		actions.getTop5();
+	}, []);
+
 	return (
 		<div className="text-center mt-5">
 			<div className="container-fluid">
-				<h1>Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia</h1>
-				<Corousel />
-				<div className="pt-2 pb-5">
-					<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
+				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
+					<h1 className="class-that-animates">
+						Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia
+					</h1>
+				</ScrollAnimation>
+				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
+					<Corousel />
+				</ScrollAnimation>
+				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
+					<div className="pt-2 pb-5 mt-5">
+						<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
+					</div>
+				</ScrollAnimation>
+				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
 					<Converter />
-				</div>
+				</ScrollAnimation>
 				<div id="flip-container mb-5">
-					<div className="row">
-						<div className="col  py-2">
-							<FlipCard />
+					<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
+						<h1>El top 9 de cryptomonedas</h1>
+					</ScrollAnimation>
+					<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
+						<div className="row">
+							<div className="col py-2">
+								{store.Top5Coins.map((item, i) => {
+									return <FlipCard CoinSymbol={item.symbol} key={i} />;
+								})}
+							</div>
 						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-					</div>
+					</ScrollAnimation>
 				</div>
-				<div id="flip-container mb-5">
-					<div className="row">
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-						<div className="col  py-2">
-							<FlipCard />
-						</div>
-					</div>
-				</div>
+				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
+					<h1>Graficos a tiempo real, con cambios en el tiempo</h1>
+				</ScrollAnimation>
 				<div className="py-5" id="mychart" />
 				<div className="py-5">
 					<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
