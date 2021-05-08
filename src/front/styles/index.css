@@ -19,11 +19,19 @@
 	color: white;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	font-weight: 900;
-	margin-top: 0px;
+    margin-top: 0px;
+    
 }
 
 .footer {
-	display: block !important;
+    display: block !important;
+    
+}
+
+#cinde
+
+{
+  border-radius: 12px;  
 }
 
 .bg-pcolor {
