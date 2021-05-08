@@ -2,12 +2,11 @@ import React, { useContext, setState, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import LOGO from "../../img/LOGO.png";
-import USERIMG from "../../img/userimg.png";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
-	const { isOpen, qfalse } = useState(false);
-	const currentuser = { firstname: "Alejandro", lastName: "Guerrero" };
+	const Currentuser = JSON.parse(localStorage.getItem("user"));
+
 	const Logout = () => {
 		localStorage.removeItem("user");
 		actions.LogoutStore();
@@ -15,60 +14,84 @@ export const Navbar = () => {
 
 	if (!store.isLogged) {
 		return (
-			<nav className="navbar mb-3">
-				<Link to="/">
+			<nav className="navbar navbar-expand-lg">
+				<Link to="/" className="navbar-brand">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
-				<Link to="/AboutUs" className="nav-item nav-link text-primary-color">
-					ACERCA DE
-				</Link>
-				<Link to="/DondeComprar" className="nav-item nav-link text-primary-color">
-					DONDE COMPRAR
-				</Link>
-				<div className="ml-auto">
-					<Link to="/Register">
-						<span className="mx-3 text-primary-color">Registrarse</span>
-					</Link>
-					<Link to="/Login">
-						<button id="Jbutton" className="btn btn-primary btn-primary-color">
-							Accessar
-						</button>
-					</Link>
+				<button
+					className="navbar-toggler btn btn-primary btn-primary-color"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i className="fas fa-bars tx-white fa-15x" />
+				</button>
+
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav mr-auto">
+						<li className="nav-item active">
+							<Link to="/AboutUs" className="nav-link">
+								ACERCA DE
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/DondeComprar" className="nav-link">
+								DONDE COMPRAR
+							</Link>
+						</li>
+					</ul>
+					<ul className="navbar-nav ml-auto">
+						<li className="nav-item">
+							<Link to="/Register" className="nav-link">
+								Registrarse
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/Login">
+								<button className="btn btn-primary btn-primary-color fa-125x">Accesar</button>
+							</Link>
+						</li>
+					</ul>
 				</div>
 			</nav>
 		);
 	} else {
 		return (
-			<nav className="navbar mb-3">
-				<Link to="/Home">
+			<nav className="navbar navbar-expand-lg">
+				<Link to="/" className="navbar-brand">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
-				<Link to="/DondeComprar" className="nav-item nav-link text-primary-color">
-					DONDE COMPRAR
-				</Link>
+				<button
+					className="navbar-toggler btn btn-primary btn-primary-color"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i className="fas fa-bars tx-white fa-15x" />
+				</button>
 
-				<div className="ml-auto">
-					<div id="flip-container-usr mb-5">
-						<div className="row">
-							<div className="flip-box-usr p-1 text-light">
-								<div className="flip-box-inner">
-									<div className="flip-box-front">
-										<img className="userimg img-fluid" src={USERIMG} style={{ height: 70 }} />
-									</div>
-									<div className="flip-box-back text-light">
-										<p className="text-light mt-3">
-											{currentuser.firstname + " " + currentuser.lastName}
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="row">
-							<button className="btn btn-primary btn-primary-color" onClick={() => Logout()}>
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav mr-auto">
+						<li className="nav-item">
+							<Link to="/DondeComprar" className="nav-link">
+								DONDE COMPRAR
+							</Link>
+						</li>
+					</ul>
+					<ul className="navbar-nav ml-auto">
+						<li className="nav-item">
+							<span className="nav-link fa-125x text-capitalize">Hola {Currentuser.firstname}</span>
+						</li>
+						<li className="nav-item">
+							<button className="btn btn-primary btn-primary-color fa-125x" onClick={() => Logout()}>
 								Salir
 							</button>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</div>
 			</nav>
 		);

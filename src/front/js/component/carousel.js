@@ -5,7 +5,7 @@ import banner2 from "../../img/Banner3.jpg";
 
 export const Corousel = () => (
 	<div>
-		<div className="bd-example carrousel mt-5">
+		<div className="bd-example carrousel">
 			<div id="carouselExampleCaptions" className="carousel slide border" data-ride="carousel">
 				<ol className="carousel-indicators">
 					<li data-target="#carouselExampleCaptions" data-slide-to="0" className="active" />

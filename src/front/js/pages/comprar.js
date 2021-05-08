@@ -4,9 +4,9 @@ import ScrollAnimation from "react-animate-on-scroll";
 
 export const DondeComprar = () => {
 	return (
-		<div className="jumbotron bg-pcolor mb-1">
-			<div className=" jumbotron bg-light">
-				<div className="jumbotron bg-pcolor mt-5">
+		<div>
+			<div className="bg-light p-3">
+				<div className="jumbotron bg-pcolor">
 					<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 						<h1 className="text-light">Donde Comprar Cryptomonedas??</h1>
 						<h4 className="text-light"> Las mejores paginas para comprar Cryptomonedas: </h4>
