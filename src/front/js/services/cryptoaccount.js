@@ -193,7 +193,7 @@ class CryptoAccounts {
 			})
 			.catch(error => console.log("error:", error));
 	}
-	
+
 	async History(id) {
 		let baseURL = process.env.BACKEND_URL + "/api/History/" + id;
 		var myHeaders = new Headers();

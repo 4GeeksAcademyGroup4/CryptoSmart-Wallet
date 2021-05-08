@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 import CryptoUsers from "../services/cryptouser";
 import ScrollAnimation from "react-animate-on-scroll";
 
@@ -12,21 +13,29 @@ export const ForgotPassword = () => {
 	const handleSubmit = event => {
 		console.log(InputEmail);
 		CryptoUsersSVC.ForgotPassword(InputEmail).then(res => {
-			setSuccessMsg(true);
+			if (res.StatusID) {
+				message.error({
+					content: res.msg,
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			} else {
+				setSuccessMsg(true);
+			}
 		});
 		event.preventDefault();
 	};
 	if (SuccessMsg) {
 		return (
 			<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
-				<section id="F1" className="container">
-					<div className="text-center mt-3">
-						<h2 className="mb-0 mt-3 text-font-base text-white">RECUPERAR CONTRASEÑA</h2>
-						<br />
+				<section id="F1" className="container my-5 p-3">
+					<div className="text-center">
+						<h2 className="mt-2 text-font-base text-white">RECUPERAR CONTRASEÑA</h2>
 					</div>
 					<div id="F2" className="card-contact card border-5 border-white mw-100 mx-auto">
 						<div id="F3" className="card-contact card mw-100 mx-auto">
-							<article className="card-body mx-auto py-0">
+							<article className="card-body mx-auto py-5">
 								<h3 className="text-center text-font-base text-white font-weight-light mt-3">
 									Su nueva contraseña fue generada exitosamente y enviada a su correo!!!
 								</h3>
@@ -47,14 +56,13 @@ export const ForgotPassword = () => {
 	} else {
 		return (
 			<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
-				<section id="F1" className="container">
-					<div className="text-center mt-3">
-						<h2 className="mb-0 mt-3 text-font-base text-white">RECUPERAR CONTRASEÑA</h2>
-						<br />
+				<section id="F1" className="container my-5 p-3">
+					<div className="text-center">
+						<h2 className="mt-2 text-font-base text-white">RECUPERAR CONTRASEÑA</h2>
 					</div>
 					<div id="F2" className="card-contact card border-5 border-white mw-100 mx-auto">
 						<div id="F3" className="card-contact card mw-100 mx-auto">
-							<article className="card-body mx-auto py-0">
+							<article className="card-body mx-auto py-5">
 								<form onSubmit={handleSubmit}>
 									<div className="form-group input-group mt-3 mb-0">
 										<div className="input-group-prepend">
