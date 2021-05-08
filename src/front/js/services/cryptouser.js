@@ -14,9 +14,7 @@ class CryptoUsers {
 
 		return await fetch(baseURL, requestOptions)
 			.then(res => {
-				if (res.status === 200) {
-					return res.json();
-				}
+				return res.json();
 			})
 			.then(result => {
 				return result;
@@ -33,9 +31,53 @@ class CryptoUsers {
 
 		return await fetch(baseURL + email, requestOptions)
 			.then(res => {
-				if (res.status === 200) {
-					return res.json();
-				}
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
+
+	async ValidateEmail(email) {
+		let baseURL = process.env.BACKEND_URL + "/api/ValidateEmail/";
+		var requestOptions = {
+			method: "GET",
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL + email, requestOptions)
+			.then(res => {
+				return res.json();
+			})
+			.then(result => {
+				return result;
+			})
+			.catch(error => console.log("error:", error));
+	}
+
+	async Register(model) {
+		let baseURL = process.env.BACKEND_URL + "/api/Register";
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify({
+			firstName: model.FName.toLowerCase(),
+			lastName: model.LName.toLowerCase(),
+			email: model.Email.toLowerCase(),
+			password: model.Password
+		});
+		//console.log(raw);
+		var requestOptions = {
+			method: "POST",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow"
+		};
+
+		return await fetch(baseURL, requestOptions)
+			.then(res => {
+				return res.json();
 			})
 			.then(result => {
 				return result;
