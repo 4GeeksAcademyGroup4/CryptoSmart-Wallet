@@ -8,7 +8,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 
 export const About = () => {
 	return (
-		<div className="jumbotron bg-pcolor mb-1">
+		<div>
 			<div className=" jumbotron bg-light">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<h1>Acerca de</h1>
