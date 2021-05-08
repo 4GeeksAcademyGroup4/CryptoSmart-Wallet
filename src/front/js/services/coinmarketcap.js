@@ -12,7 +12,7 @@ class CoinMarketCap {
 		};
 
 		return await fetch(
-			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=14",
+			"https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6",
 			requestOptions
 		)
 			.then(response => {
