@@ -13,7 +13,7 @@ export const Landing = () => {
 		chart_id: "mychart",
 		cryptocompare_tickers: ["BTC", "ETH"],
 		iconomi_tickers: ["BLX", "CAR"],
-		last_days: 90
+		last_days: 15
 	});
 
 	useEffect(() => {
@@ -24,41 +24,43 @@ export const Landing = () => {
 		<div className="text-center mt-5">
 			<div className="container-fluid">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
-					<h1 className="class-that-animates">
+					<h1 className="class-that-animates bg-white-50">
 						Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia
 					</h1>
 				</ScrollAnimation>
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<Corousel />
 				</ScrollAnimation>
-				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
-					<div className="pt-2 pb-5 mt-5">
-						<h1>Consulte el cambio su Crypto Moneda favorita a tiempo real</h1>
-					</div>
-				</ScrollAnimation>
-				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
-					<Converter />
-				</ScrollAnimation>
-				<div id="flip-container mb-5">
+				<div id="flip-container" className="mt-5">
 					<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
-						<h1>El top 9 de cryptomonedas</h1>
+						<h1 className="bg-white-50">El top 6 de Crypto Monedas</h1>
 					</ScrollAnimation>
 					<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 						<div className="row">
 							<div className="col py-2">
 								{store.Top5Coins.map((item, i) => {
-									return <FlipCard CoinSymbol={item.symbol} key={i} />;
+									return <FlipCard Coin={item} key={i} />;
 								})}
 							</div>
 						</div>
 					</ScrollAnimation>
 				</div>
 				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
-					<h1>Graficos a tiempo real, con cambios en el tiempo</h1>
+					<div className="mt-5">
+						<h1 className="m-0 bg-white-50">Tipos de Cambio</h1>
+					</div>
 				</ScrollAnimation>
-				<div className="py-5" id="mychart" />
-				<div className="py-5">
-					<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
+				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
+					<Converter />
+				</ScrollAnimation>
+				<ScrollAnimation animateIn="fadeIn" duration="1" animateOnce="true">
+					<h1 className="mt-5 bg-white-50">Tendencias</h1>
+				</ScrollAnimation>
+				<div className="row row-cols-2 mb-5 mx-auto">
+					<div className="col-xl-6 main-column mx-auto bg-white-50" id="mychart" />
+					<div className="col-xl-6 main-column mx-auto minsize">
+						<TradingViewWidget symbol="BTCUSD" theme={Themes.DARK} locale="es" autosize />
+					</div>
 				</div>
 			</div>
 		</div>

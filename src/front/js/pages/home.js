@@ -53,7 +53,9 @@ export const Home = () => {
 				<BtnTransfer Account={account} TypeLink="link" />
 			</Menu.Item>
 			<Menu.Item key="3">
-				<a>Ver Transacciones</a>
+				<Link to={"/History/" + account.accountID} className="a">
+					Ver Transacciones
+				</Link>
 			</Menu.Item>
 			<Menu.Item key="4">
 				<BtnAdjust Account={account} />
@@ -77,7 +79,7 @@ export const Home = () => {
 		return <Redirect to={{ pathname: "/Login" }} />;
 	} else {
 		return (
-			<div className="container">
+			<div className="container my-5">
 				<div className="row row-cols-2 mx-auto">
 					<div className="col-xl-6 main-column">
 						<div className="bg-dark text-center my-2 py-2 rounded">
@@ -89,7 +91,7 @@ export const Home = () => {
 							})}
 						</div>
 					</div>
-					<div className="col-xl-6 main-column">
+					<div className="col-xl-6 main-column bg-light">
 						<div className="bg-dark text-center my-2 py-2 rounded">
 							<h2 className="text-primary-color text-uppercase text-font-base m-0">
 								Todas tus cryptomonedas

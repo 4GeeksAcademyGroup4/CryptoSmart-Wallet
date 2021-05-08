@@ -87,7 +87,7 @@
 		"react-currency-format": "^1.0.0",
 		"react-dom": "^16.8.4",
 		"react-hook-form": "^7.3.5",
-    "react-native-url-preview": "^1.1.9",
+		"react-native-url-preview": "^1.1.9",
 		"react-hook-usefetch": "^1.0.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0",
