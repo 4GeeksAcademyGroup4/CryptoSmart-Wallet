@@ -111,7 +111,7 @@ export const Home = () => {
 								</thead>
 								<tbody>
 									{store.UserAccounts.map((item, i) => {
-										console.log(item);
+										//console.log(item);
 										return (
 											<tr key={i}>
 												<td>
