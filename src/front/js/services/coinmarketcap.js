@@ -9,8 +9,7 @@ class CoinMarketCap {
 		var requestOptions = {
 			method: "GET",
 			headers: myHeaders,
-            redirect: "follow",
-            mode: 'no-cors'
+			redirect: "follow"
 		};
 
 		return await fetch(
@@ -36,8 +35,7 @@ class CoinMarketCap {
 		var requestOptions = {
 			method: "GET",
 			headers: myHeaders,
-            redirect: "follow",
-            mode: 'no-cors'
+			redirect: "follow"
 		};
 
 		return await fetch("https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=" + id, requestOptions)
@@ -60,8 +58,7 @@ class CoinMarketCap {
 		var requestOptions = {
 			method: "GET",
 			headers: myHeaders,
-            redirect: "follow",
-            mode: 'no-cors'
+			redirect: "follow"
 		};
 
 		return await fetch(
