@@ -1,15 +1,17 @@
 import React, { useContext, setState, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import LOGO from "../../img/LOGO.png";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const Currentuser = JSON.parse(localStorage.getItem("user"));
+	let history = useHistory();
 
 	const Logout = () => {
 		localStorage.removeItem("user");
 		actions.LogoutStore();
+		history.push("/");
 	};
 
 	if (!store.isLogged) {
@@ -60,7 +62,7 @@ export const Navbar = () => {
 	} else {
 		return (
 			<nav className="navbar navbar-expand-lg">
-				<Link to="/" className="navbar-brand">
+				<Link to="/Home" className="navbar-brand">
 					<img className="img-fluid" src={LOGO} style={{ height: 80 }} />
 				</Link>
 				<button
