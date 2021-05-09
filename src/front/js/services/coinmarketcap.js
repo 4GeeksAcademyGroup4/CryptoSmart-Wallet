@@ -7,10 +7,12 @@ class CoinMarketCap {
         myHeaders.append("Access-Control-Allow-Headers", "Content-Type");
         myHeaders.append("Access-Control-Allow-Origin", "*");
         myHeaders.append("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
+        myHeaders.append('Content-Type', 'application/json');
 
         var requestOptions = {
             method: "GET",
             headers: myHeaders,
+            mode: 'no-cors',
             redirect: "follow"
         };
 
@@ -35,10 +37,12 @@ class CoinMarketCap {
         myHeaders.append("Access-Control-Allow-Headers", "Content-Type");
         myHeaders.append("Access-Control-Allow-Origin", "*");
         myHeaders.append("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
+        myHeaders.append('Content-Type', 'application/json');
 
         var requestOptions = {
             method: "GET",
             headers: myHeaders,
+            mode: 'no-cors',
             redirect: "follow"
         };
 
@@ -60,10 +64,12 @@ class CoinMarketCap {
         myHeaders.append("Access-Control-Allow-Headers", "Content-Type");
         myHeaders.append("Access-Control-Allow-Origin", "*");
         myHeaders.append("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
+        myHeaders.append('Content-Type', 'application/json');
 
         var requestOptions = {
             method: "GET",
             headers: myHeaders,
+            mode: 'no-cors',
             redirect: "follow"
         };
 
