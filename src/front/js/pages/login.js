@@ -10,7 +10,6 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
 	const [inputEmail, setEmailValue] = useState("");
 	const [inputPassword, setPwdValue] = useState("");
-	const [user, setUser] = useState(localStorage.getItem("user"));
 	const CryptoUsersSVC = new CryptoUsers();
 
 	const handleSubmit = event => {
@@ -28,14 +27,13 @@ export const Login = () => {
 				});
 			} else {
 				localStorage.setItem("user", JSON.stringify(res));
-				setUser(localStorage.getItem("user"));
 				actions.LoginStore();
 			}
 		});
 		event.preventDefault();
 	};
 
-	if (user != undefined) {
+	if (store.isLogged) {
 		return <Redirect to={{ pathname: "/Home" }} />;
 	} else {
 		return (

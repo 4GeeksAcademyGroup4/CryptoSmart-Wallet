@@ -1,60 +1,57 @@
-import React, { useState, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 import { message } from "antd";
 import ScrollAnimation from "react-animate-on-scroll";
 
+import CryptoUsers from "../services/cryptouser";
+
 export const Register = () => {
-	const { store, actions } = useContext(Context);
 	const [inputFname, setFnameValue] = useState("");
 	const [inputSname, setSnameValue] = useState("");
 	const [inputEmail, setEmailValue] = useState("");
 	const [inputPassword, setPasswordValue] = useState("");
-	const [inputRpassword] = useState("");
 	const [user, setUser] = useState(false);
+	const CryptoUsersSVC = new CryptoUsers();
 
 	const handleSubmit = event => {
-		let baseURL = process.env.BACKEND_URL + "/api/Register";
-
-		let validURL = process.env.BACKEND_URL + "/api/ValidateEmail";
-
-		var myHeaders = new Headers();
-		myHeaders.append("Content-Type", "application/json");
-
-		var data = JSON.stringify({
-			firstName: inputFname.toLowerCase(),
-			lastName: inputSname.toLowerCase(),
-			email: inputEmail.toLowerCase(),
-			is_Active: true,
-			password: inputPassword
+		CryptoUsersSVC.ValidateEmail(inputEmail).then(res => {
+			if (res.StatusID === 406) {
+				message.error({
+					content: "Este email ya se encuentra registrado!!!",
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			} else if (res.StatusID === 411) {
+				message.error({
+					content: "Este email es invalido!!!",
+					style: {
+						marginTop: "30vh"
+					}
+				});
+			} else {
+				let model = {
+					FName: inputFname,
+					LName: inputSname,
+					Email: inputEmail,
+					Password: inputPassword
+				};
+				CryptoUsersSVC.Register(model).then(res2 => {
+					if (res2.StatusID) {
+						message.error({
+							content: res.msg,
+							style: {
+								marginTop: "30vh"
+							}
+						});
+					} else {
+						setUser(true);
+					}
+				});
+			}
 		});
-
-		var requestOptions = {
-			method: "POST",
-			headers: myHeaders,
-			body: data,
-			redirect: "follow"
-		};
-
-		fetch(baseURL, requestOptions)
-			.then(res => {
-				if (res.status === 400) {
-					message.error({
-						content: "Todos los campos son requeridos"
-					});
-				} else if (res.status === 406) {
-					message.error({
-						content: "El correo ingresado ya existe"
-					});
-				} else if (res.status === 200) {
-					return res.json();
-				}
-			})
-			.then(result => {
-				setUser(true);
-			})
-			.catch(error => console.log("error:", error));
 
 		event.preventDefault();
 	};
@@ -77,7 +74,7 @@ export const Register = () => {
 		);
 	} else {
 		return (
-			<section id="R1" className="container ">
+			<section id="R1" className="container my-5 p-3">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<div className="text-center mt-3">
 						<h2 className="mb-0 mt-3 text-font-base text-white">Unete a CryptoSmart Wallet</h2>
@@ -85,7 +82,7 @@ export const Register = () => {
 					</div>
 					<div id="R2" className="card-contact card border-5 border-white mw-100 mx-auto">
 						<div id="R3" className="card-contact card mw-100 mx-auto">
-							<article className="card-body mx-auto py-0">
+							<article className="card-body mx-auto pt-5 pb-2">
 								<form onSubmit={handleSubmit}>
 									<div className="form-group input-group mb-0">
 										<div className="input-group-prepend">

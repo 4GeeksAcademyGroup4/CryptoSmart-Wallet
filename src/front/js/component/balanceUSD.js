@@ -18,7 +18,7 @@ export const BalanceUSD = props => {
 
 	useEffect(() => {
 		fnDetail();
-	}, []);
+	});
 
 	return (
 		<span>

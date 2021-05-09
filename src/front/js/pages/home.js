@@ -15,7 +15,6 @@ import CryptoAccounts from "../services/cryptoaccount";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const CryptoAccountsSVC = new CryptoAccounts();
-	const user = localStorage.getItem("user");
 
 	useEffect(() => {
 		actions.getTop5();
@@ -75,7 +74,7 @@ export const Home = () => {
 		</Menu>
 	);
 
-	if (user == undefined) {
+	if (!store.isLogged) {
 		return <Redirect to={{ pathname: "/Login" }} />;
 	} else {
 		return (
