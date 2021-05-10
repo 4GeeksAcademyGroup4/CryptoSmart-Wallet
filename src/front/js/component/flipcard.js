@@ -6,8 +6,8 @@ import rigoURL from "../../img/rigo-baby.jpg";
 import CurrencyFormat from "react-currency-format";
 
 export const FlipCard = props => {
-    const [Coin, setCoin] = useState({});
-    const [CoinInfo, setCoinInfo] = useState({});
+	const [Coin, setCoin] = useState({});
+	const [CoinInfo, setCoinInfo] = useState({});
 	const CoinMarketCapSVC = new CoinMarketCap();
 
 	const fnDetail = () => {
@@ -15,12 +15,12 @@ export const FlipCard = props => {
 			//console.log(res);
 			setCoin(res);
 		});
-    }
-    const fnDetailInfo = () => {
-        CoinMarketCapSVC.Detail(props.Coin.symbol).then(res => {
-            setCoinInfo(res);
-        });
-    }
+	};
+	const fnDetailInfo = () => {
+		CoinMarketCapSVC.Detail(props.Coin.symbol).then(res => {
+			setCoinInfo(res);
+		});
+	};
 
 	useEffect(() => {
 		fnDetailInfo();
