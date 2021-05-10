@@ -17,7 +17,7 @@ export const FlipCard = props => {
 	}
 
 	useEffect(() => {
-		console.log(fnDetail());
+		// console.log(fnDetail());
 		fnDetail();
 	}, []);
 
@@ -25,8 +25,8 @@ export const FlipCard = props => {
 		<div className="flip-box p-1  text-light">
 			<div className="flip-box-inner">
 				<div className="flip-box-front">
-					{/* <img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" /> */}
-					<img src={rigoURL} className="w-100 p-3 mw-100 mh-100 my-2" />
+					<img src={Coin.logo} className="w-100 p-3 mw-100 mh-100" />
+					{/* <img src={rigoURL} className="w-100 p-3 mw-100 mh-100 my-2" /> */}
 				</div>
 				<div className="flip-box-back text-light">
 					<h3 className="text-light mt-3 mb-0">{props.Coin.symbol}</h3>
