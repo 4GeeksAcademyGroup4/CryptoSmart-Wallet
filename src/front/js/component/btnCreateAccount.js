@@ -66,7 +66,7 @@ export const BtnCreateAccount = props => {
 			setTimeout(() => {
 				clearInterval(timer);
 				actions.UpdateAccounts();
-				window.location.reload();
+				//window.location.reload();
 			}, secondsToGo * 1000);
 
 			return (
