@@ -43,7 +43,6 @@ class CoinMarketCap {
 				}
 			})
 			.then(result => {
-				//console.log(result);
 				return result.data[id.toString()];
 			})
 			.catch(error => console.log("error", error));
