@@ -3,7 +3,7 @@ class CoinMarketCap {
 
 	async Latest() {
 		var myHeaders = new Headers();
-		myHeaders.append("X-CMC_PRO_API_KEY", "0a3549c4-3d25-4c8c-8315-8ec2baa5b2b6");
+		myHeaders.append("X-CMC_PRO_API_KEY", "70bd17af-dfa8-4fb3-851d-e06c3fc0beed");
 
 		var requestOptions = {
 			method: "GET",
@@ -28,7 +28,7 @@ class CoinMarketCap {
 
 	async Detail(id) {
 		var myHeaders = new Headers();
-		myHeaders.append("X-CMC_PRO_API_KEY", "0a3549c4-3d25-4c8c-8315-8ec2baa5b2b6");
+		myHeaders.append("X-CMC_PRO_API_KEY", "70bd17af-dfa8-4fb3-851d-e06c3fc0beed");
 
 		var requestOptions = {
 			method: "GET",
@@ -51,7 +51,7 @@ class CoinMarketCap {
 
 	async DetailQuote(id) {
 		var myHeaders = new Headers();
-		myHeaders.append("X-CMC_PRO_API_KEY", "0a3549c4-3d25-4c8c-8315-8ec2baa5b2b6");
+		myHeaders.append("X-CMC_PRO_API_KEY", "70bd17af-dfa8-4fb3-851d-e06c3fc0beed");
 
 		var requestOptions = {
 			method: "GET",
