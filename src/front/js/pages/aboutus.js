@@ -45,10 +45,10 @@ export const About = () => {
 
 	return (
 		<div>
-			<div className=" jumbotron bg-light py-3">
+			<div className="container-fluid m-5">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<h1>CryptoSmart Wallet</h1>
-					<div className="container">
+					<div className="container bg-white-50">
 						<p className="fa-15x text-justify">
 							CryptoSmart Wallet es una plataforma que nos permita llevar el control de nuestras
 							criptomonedas, llámese saldos, balances, transferencias, ajustes, etc. Además de brindar una
