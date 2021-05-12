@@ -45,7 +45,7 @@ export const About = () => {
 
 	return (
 		<div>
-			<div className="container-fluid m-5">
+			<div className="container w-100 mx-auto my-5">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<h1>CryptoSmart Wallet</h1>
 					<div className="container bg-white-50">
@@ -66,11 +66,11 @@ export const About = () => {
 					<h2>Equipo Desarrollador:</h2>
 				</ScrollAnimation>
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
-					<div className="container">
+					<div className="container mx-auto">
 						<div className="row row-cols-2">
 							{DevTeam.map((item, i) => {
 								return (
-									<div className="col-xl-6" key={i}>
+									<div className="col-xl-6 text-center" key={i}>
 										<div className="flip-box-ab p-1 text-light">
 											<div className="flip-box-inner">
 												<div className="flip-box-front">
