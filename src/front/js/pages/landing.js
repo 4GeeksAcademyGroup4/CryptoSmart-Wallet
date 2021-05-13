@@ -25,7 +25,7 @@ export const Landing = () => {
 			<div className="container-fluid">
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
 					<h1 className="class-that-animates bg-white-50">
-						Cree su cuenta, transfiera y reciba sus Crypto Monetadas a su convenencia
+						Cree su cuenta, transfiera y reciba sus Crypto Monedas a su convenencia
 					</h1>
 				</ScrollAnimation>
 				<ScrollAnimation animateIn="fadeIn" duration="2" animateOnce="true">
